@@ -3,7 +3,7 @@ using BepInEx.Logging;
 
 namespace CatQuest_Randomizer
 {
-    [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
+    [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
     public class Randomizer : BaseUnityPlugin
     {
         internal static new ManualLogSource Logger;
@@ -11,7 +11,7 @@ namespace CatQuest_Randomizer
         private void Awake()
         {
             Logger = base.Logger;
-            Logger.LogInfo($"Plugin {ModInfo.PLUGIN_GUID} is loaded!");
+            Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
         }
     }
 }
