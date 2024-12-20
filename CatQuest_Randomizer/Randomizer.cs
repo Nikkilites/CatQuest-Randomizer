@@ -1,7 +1,7 @@
 using BepInEx;
 using BepInEx.Logging;
 
-namespace CatQuest_Randomizer;
+namespace CatQuest_Randomizer
 {
     [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
     public class Randomizer : BaseUnityPlugin
