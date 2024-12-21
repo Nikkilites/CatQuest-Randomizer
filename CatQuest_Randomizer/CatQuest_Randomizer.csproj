@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net35</TargetFramework>
-    <AssemblyName>CatQuest_Randomizer</AssemblyName>
-    <Product>My first plugin</Product>
+    <AssemblyName>Nikkilite_CatQuest_Randomizer</AssemblyName>
+    <Product>CatQuest Randomizer</Product>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
