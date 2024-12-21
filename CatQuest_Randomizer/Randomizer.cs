@@ -25,22 +25,6 @@ namespace CatQuest_Randomizer
         {
             yield return new WaitForSeconds(20f); // Wait for 5 seconds before triggering
 
-            string archipelagoPlayerName = "Asara";
-            PlayerData playerData = Game.instance.gameData.player;
-            string format = "+{0} recieved from {1}";
-            string text = string.Format(format, 50, archipelagoPlayerName);
-
-            CombatTextSystem.current.ShowText(CombatTextSystem.TextType.EXP, text, Game.instance.player.GetPosition(), 1f);
-            playerData.progression.xp.Value += 50;
-
-            Logger.LogInfo($"Collected EXP");
-
-            yield return new WaitForSeconds(10f); // Wait for 5 seconds before triggering
-
-            CombatTextSystem.current.ShowText(CombatTextSystem.TextType.GOLD, text, Game.instance.player.GetPosition(), 1f);
-            playerData.currency.gold.Value += 50;
-
-            Logger.LogInfo($"Collected GOLD");
         }
     }
 }
