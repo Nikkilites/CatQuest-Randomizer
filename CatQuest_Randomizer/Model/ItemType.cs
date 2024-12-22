@@ -10,7 +10,7 @@ namespace CatQuest_Randomizer.Model
 		gold,
 		exp,
 		skill,
-		royalArt,
+		royal,
 		key,
 	}
 }
