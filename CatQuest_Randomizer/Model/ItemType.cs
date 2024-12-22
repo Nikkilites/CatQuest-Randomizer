@@ -11,5 +11,6 @@ namespace CatQuest_Randomizer.Model
 		exp,
 		skill,
 		royalArt,
+		key,
 	}
 }
