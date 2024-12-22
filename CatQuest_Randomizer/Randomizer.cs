@@ -2,9 +2,6 @@ using BepInEx;
 using BepInEx.Logging;
 using System.Collections;
 using UnityEngine;
-using static PlayerEvent;
-using System.Text;
-using UniRx;
 
 namespace CatQuest_Randomizer
 {
