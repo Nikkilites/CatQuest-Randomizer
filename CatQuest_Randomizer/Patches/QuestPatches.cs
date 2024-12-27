@@ -42,7 +42,7 @@ namespace CatQuest_Randomizer.Patches
     }
 
     [HarmonyPatch(typeof(QuestManager), nameof(QuestManager.LoadData))]
-    public class ListAllQuests
+    public class ListAllQuestsPatch
     {
         private static ManualLogSource Logger;
 
