@@ -24,7 +24,7 @@
                 case "skill":
                     return ItemType.skill;
                 case "royalArt":
-                    return ItemType.royal;
+                    return ItemType.art;
                 default:
                     return ItemType.key;
             }
