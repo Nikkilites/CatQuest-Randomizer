@@ -30,8 +30,27 @@ namespace CatQuest_Randomizer.Patches
 
         static void Postfix(Quest __instance)
         {
-            Logger.LogInfo($"Quest {__instance.questId} completed, send check");
-            //Send quest id to ConnectionHandler
+            Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestEndPatch");
+            //Send quest id to ConnectionHandler here
+        }
+    }
+
+    [HarmonyPatch(typeof(Quest), nameof(Quest.Init))]
+    public class RemoveQuestRewardsPatch
+    {
+        private static ManualLogSource Logger;
+
+        static void Prefix()
+        {
+            Logger = BepInEx.Logging.Logger.CreateLogSource("RemoveQuestRewardsPatch");
+        }
+
+        static void Postfix(Quest __instance)
+        {
+            __instance.reward._gold = 0;
+            __instance.reward.exp = 0;
+
+            Logger.LogInfo($"Quest Rewards modified for Quest {__instance.questId}");
         }
     }
 
