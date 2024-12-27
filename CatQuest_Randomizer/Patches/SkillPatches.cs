@@ -30,7 +30,7 @@ namespace CatQuest_Randomizer.Patches
             {
                 Skill skill = Game.instance.skillManager.GetSkill(__instance.id);
                 Game.instance.gameData.player.skills.obtained.Remove(skill);
-                Logger.LogInfo($"Obtaining skill {__instance.id} has been disabled by DisableObtainingSkillPatch");
+                Logger.LogInfo($"Obtaining skill {__instance.id} was disabled");
             }
         }
     }

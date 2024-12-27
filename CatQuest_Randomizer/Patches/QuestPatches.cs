@@ -1,5 +1,4 @@
-﻿using BepInEx;
-using BepInEx.Logging;
+﻿using BepInEx.Logging;
 using HarmonyLib;
 using System.Collections.Generic;
 
@@ -37,7 +36,7 @@ namespace CatQuest_Randomizer.Patches
             __instance.reward._gold = 0;
             __instance.reward.exp = 0;
 
-            Logger.LogInfo($"Quest Rewards modified for Quest {__instance.questId}");
+            Logger.LogInfo($"Obtaining Quest Rewards for Quest {__instance.questId} was disabled");
         }
     }
 
