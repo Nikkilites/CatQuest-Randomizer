@@ -1,10 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CatQuest_Randomizer.Patches
 {
@@ -15,7 +12,7 @@ namespace CatQuest_Randomizer.Patches
 
         private void Awake()
         {
-            Logger = base.Logger; // Initialize the Logger
+            Logger = base.Logger;
             Harmony harmony = new Harmony("enable.logger");
             harmony.PatchAll();
         }
@@ -28,13 +25,11 @@ namespace CatQuest_Randomizer.Patches
 
         static void Prefix()
         {
-            // Initialize Logger in this patch
             Logger = BepInEx.Logging.Logger.CreateLogSource("QuestEndPatch");
         }
 
         static void Postfix(Quest __instance)
         {
-            // Log quest completion message
             Logger.LogInfo($"Quest {__instance.questId} completed, send check");
             //Send quest id to ConnectionHandler
         }
@@ -47,13 +42,11 @@ namespace CatQuest_Randomizer.Patches
 
         static void Prefix()
         {
-            // Initialize Logger in this patch
             Logger = BepInEx.Logging.Logger.CreateLogSource("ListAllQuests");
         }
 
         static void Postfix(QuestManager __instance)
         {
-            // Use reflection to access the private 'quests' field
             var questsField = AccessTools.Field(typeof(QuestManager), "quests");
             if (questsField == null)
             {
@@ -63,7 +56,6 @@ namespace CatQuest_Randomizer.Patches
 
             var quests = questsField.GetValue(__instance) as Dictionary<string, Quest>;
 
-            // Assuming quests are stored in __instance.quests as a dictionary
             if (quests != null)
             {
                 foreach (KeyValuePair<string, Quest> keyValuePair in quests)
@@ -80,7 +72,6 @@ namespace CatQuest_Randomizer.Patches
                         ? string.Join(", ", quest.prereq.quests)
                         : "None";
 
-                    // Log everything in one line
                     Logger.LogInfo($"Loaded Quest: ID = {questId}, Title = {title}, Prereq Level = {prereqLevel}, Prereq Quests = {prereqQuests}");
 
                     if (prereqLevel != "None")
@@ -95,5 +86,4 @@ namespace CatQuest_Randomizer.Patches
             }
         }
     }
-
 }
