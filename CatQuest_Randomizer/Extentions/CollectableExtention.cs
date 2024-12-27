@@ -7,7 +7,7 @@ namespace CatQuest_Randomizer.Extentions
         private readonly PlayerData playerData = Game.instance.gameData.player;
         private readonly string format = "+{0}";
 
-        private void AddGold(Item item)
+        public void AddGold(Item item)
         {
             if (!int.TryParse(item.GetItemValue(), out int itemValue))
             {
@@ -20,7 +20,7 @@ namespace CatQuest_Randomizer.Extentions
             playerData.currency.gold.Value += itemValue;
         }
 
-        private void AddExp(Item item)
+        public void AddExp(Item item)
         {
             if (!int.TryParse(item.GetItemValue(), out int itemValue))
             {
