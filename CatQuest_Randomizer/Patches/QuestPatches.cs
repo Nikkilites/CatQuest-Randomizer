@@ -56,7 +56,7 @@ namespace CatQuest_Randomizer.Patches
             var questsField = AccessTools.Field(typeof(QuestManager), "quests");
             if (questsField == null)
             {
-                Logger.LogError("Could not find the 'quests' field on QuestManager.");
+                Logger.LogError("Could not find the 'quests' field in QuestManager.");
                 return;
             }
 
