@@ -2,7 +2,7 @@
 
 namespace CatQuest_Randomizer.Extentions
 {
-    public class CollectableExtention
+    public class CollectableExtentions
     {
         private readonly PlayerData playerData = Game.instance.gameData.player;
         private readonly string format = "+{0}";
