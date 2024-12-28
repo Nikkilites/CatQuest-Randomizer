@@ -7,11 +7,19 @@ namespace CatQuest_Randomizer.Extentions
         private readonly PlayerData playerData = Game.instance.gameData.player;
         private readonly string format = "+{0}";
 
-        public void AddGold(Item item)
+        public void AddCollectable(Item item)
+        {
+            if (item.GetItemType() == ItemType.gold)
+                AddGold(item);
+            else
+                AddExp(item);
+        }
+
+        private void AddGold(Item item)
         {
             if (!int.TryParse(item.GetItemValue(), out int itemValue))
             {
-                CombatTextSystem.current.ShowText(CombatTextSystem.TextType.GOLD, "Failed to parse coin value", Game.instance.player.GetPosition(), 1f);
+                CombatTextSystem.current.ShowText(CombatTextSystem.TextType.GOLD, "Failed to parse gold value", Game.instance.player.GetPosition(), 1f);
                 return;
             }
             string text = string.Format(format, itemValue);
@@ -20,11 +28,11 @@ namespace CatQuest_Randomizer.Extentions
             playerData.currency.gold.Value += itemValue;
         }
 
-        public void AddExp(Item item)
+        private void AddExp(Item item)
         {
             if (!int.TryParse(item.GetItemValue(), out int itemValue))
             {
-                CombatTextSystem.current.ShowText(CombatTextSystem.TextType.EXP, "Failed to parse coin value", Game.instance.player.GetPosition(), 1f);
+                CombatTextSystem.current.ShowText(CombatTextSystem.TextType.EXP, "Failed to parse exp value", Game.instance.player.GetPosition(), 1f);
                 return;
             }
             string text = string.Format(format, itemValue);
