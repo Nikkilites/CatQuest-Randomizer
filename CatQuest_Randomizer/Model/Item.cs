@@ -15,19 +15,14 @@
 
         public ItemType GetItemType()
         {
-            switch (this.Id.Split('.')[0])
+            return this.Id.Split('.')[0] switch
             {
-                case "gold":
-                    return ItemType.gold;
-                case "exp":
-                    return ItemType.exp;
-                case "skill":
-                    return ItemType.skill;
-                case "royalArt":
-                    return ItemType.art;
-                default:
-                    return ItemType.key;
-            }
+                "gold" => ItemType.gold,
+                "exp" => ItemType.exp,
+                "skill" => ItemType.skill,
+                "royalArt" => ItemType.art,
+                _ => ItemType.key,
+            };
         }
 
         public string GetItemValue()
