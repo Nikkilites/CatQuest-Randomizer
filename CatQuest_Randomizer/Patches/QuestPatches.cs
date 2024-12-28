@@ -59,7 +59,7 @@ namespace CatQuest_Randomizer.Patches
                 return;
             }
 
-            var quests = questsField.GetValue(__instance) as Dictionary<string, Quest>;
+            Dictionary<string, Quest> quests = questsField.GetValue(__instance) as Dictionary<string, Quest>;
 
             if (quests != null)
             {
