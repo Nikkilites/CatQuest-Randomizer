@@ -57,11 +57,6 @@ namespace CatQuest_Randomizer.Patches
                         ? string.Join(", ", quest.prereq.quests)
                         : "None";
 
-
-                    if (prereqLevel != "None")
-                    {
-                        keyValuePair.Value.prereq.level = 0;
-                    }
                     Randomizer.Logger.LogInfo($"Loaded Quest: ID = {questId}, Title = {title}, Prereq Level = {prereqLevel}, Prereq Quests = {prereqQuests}");
                 }
             }
