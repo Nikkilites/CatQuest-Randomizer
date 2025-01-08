@@ -1,5 +1,4 @@
-﻿using BepInEx.Logging;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System.Reflection;
 
 namespace CatQuest_Randomizer.Patches
@@ -7,20 +6,19 @@ namespace CatQuest_Randomizer.Patches
     [HarmonyPatch(typeof(UnlockBlock), nameof(UnlockBlock.Start))]
     public class DisableObtainingArtsPatch
     {
-        private static ManualLogSource Logger;
         private static FieldInfo questIdField = typeof(UnlockBlock).GetField("questId", BindingFlags.NonPublic | BindingFlags.Instance);
 
         static bool Prefix(UnlockBlock __instance)
         {
-            Logger = BepInEx.Logging.Logger.CreateLogSource("DisableObtainingArtsPatch");
+            Randomizer.Logger.LogInfo("Check if unlockable should be disabled.");
 
             switch (__instance.value)
             {
                 case Unlockables.Flying:
-                    Logger.LogInfo($"Obtaining Flying was disabled");
+                    Randomizer.Logger.LogInfo($"Obtaining Flying was disabled");
                     break;
                 case Unlockables.WaterWalking:
-                    Logger.LogInfo($"Obtaining Water Walking was disabled");
+                    Randomizer.Logger.LogInfo($"Obtaining Water Walking was disabled");
                     break;
                 default:
                     Game.instance.Unlock(__instance.value);

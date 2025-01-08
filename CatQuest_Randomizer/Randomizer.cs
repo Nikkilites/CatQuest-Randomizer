@@ -8,11 +8,11 @@ namespace CatQuest_Randomizer
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     public class Randomizer : BaseUnityPlugin
     {
-        internal static new ManualLogSource Logger;
+        public static new ManualLogSource Logger;
 
         private void Awake()
         {
-            Logger = base.Logger;
+            Logger = BepInEx.Logging.Logger.CreateLogSource("Cat Quest Logger");
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
 
             StartCoroutine(TriggerCollectEventCoroutine());

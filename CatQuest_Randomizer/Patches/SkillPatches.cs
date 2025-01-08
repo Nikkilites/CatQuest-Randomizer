@@ -7,13 +7,10 @@ namespace CatQuest_Randomizer.Patches
     [HarmonyPatch(typeof(GiveBlock), nameof(GiveBlock.Start))]
     public class DisableObtainingSkillPatch
     {
-        private static ManualLogSource Logger;
         private static bool obtained;
 
         static void Prefix(GiveBlock __instance)
         {
-            Logger = BepInEx.Logging.Logger.CreateLogSource("DisableObtainingSkillPatch");
-
             Skill skill = Game.instance.skillManager.GetSkill(__instance.id);
             if (!Game.instance.gameData.player.skills.obtained.Contains(skill))
             {
@@ -30,7 +27,7 @@ namespace CatQuest_Randomizer.Patches
             {
                 Skill skill = Game.instance.skillManager.GetSkill(__instance.id);
                 Game.instance.gameData.player.skills.obtained.Remove(skill);
-                Logger.LogInfo($"Obtaining skill {__instance.id} was disabled");
+                Randomizer.Logger.LogInfo($"Obtaining skill {__instance.id} was disabled");
             }
         }
     }
@@ -39,19 +36,15 @@ namespace CatQuest_Randomizer.Patches
     [HarmonyPatch(typeof(SkillManager), nameof(SkillManager.LoadSkillData))]
     public class ListAllSkillsPatch
     {
-        private static ManualLogSource Logger;
-
-        static void Prefix()
-        {
-            Logger = BepInEx.Logging.Logger.CreateLogSource("ListAllSkills");
-        }
-
         static void Postfix(SkillManager __instance)
         {
+            Randomizer.Logger.LogInfo("Will list all Skills");
+
             var skillsField = AccessTools.Field(typeof(SkillManager), "skillData");
+
             if (skillsField == null)
             {
-                Logger.LogError("Could not find the 'skills' field in SkillManager.");
+                Randomizer.Logger.LogError("Could not find the 'skills' field in SkillManager.");
                 return;
             }
 
@@ -65,12 +58,12 @@ namespace CatQuest_Randomizer.Patches
                     string skillId = skill.skillId;
                     LocalizedString name = skill.name;
 
-                    Logger.LogInfo($"Loaded Skill: ID = {skillId}, Name = {name}");
+                    Randomizer.Logger.LogInfo($"Loaded Skill: ID = {skillId}, Name = {name}");
                 }
             }
             else
             {
-                Logger.LogInfo("No Skills found to load.");
+                Randomizer.Logger.LogError("No Skills found to load.");
             }
         }
     }

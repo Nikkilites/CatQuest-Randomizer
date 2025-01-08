@@ -6,6 +6,8 @@ namespace CatQuest_Randomizer.Extentions
 	{
 		public void AddRoyalArt(Item item)
 		{
+			Randomizer.Logger.LogInfo($"Will add Royal Art {item.GetItemValue()} to player");
+
 			Unlockables unlockable = (item.GetItemValue() == "flight" ? Unlockables.Flying : Unlockables.WaterWalking);
 
 			Game.instance.Unlock(unlockable);
