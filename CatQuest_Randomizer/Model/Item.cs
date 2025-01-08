@@ -4,9 +4,9 @@
     {
         public string Id { get; }
         public string Name { get; }
-        public string Player { get; }
+        public string Player { get; set; }
 
-        public Item(string id, string name, string player)
+        public Item(string id, string name, string player = null)
         {
             Id = id;
             Name = name;
@@ -20,7 +20,7 @@
                 "gold" => ItemType.gold,
                 "exp" => ItemType.exp,
                 "skill" => ItemType.skill,
-                "royalArt" => ItemType.art,
+                "art" => ItemType.art,
                 _ => ItemType.key,
             };
         }
