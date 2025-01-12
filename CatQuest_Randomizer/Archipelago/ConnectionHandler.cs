@@ -59,22 +59,6 @@ namespace CatQuest_Randomizer.Archipelago
             return true;
         }
 
-        public void CheckForNewItems()
-        {
-            var items = session.Items.AllItemsReceived;
-            Randomizer.Logger.LogInfo(items);
-
-            //Compare this list to other list, for each that has not been found, add it to the player
-
-            //Initializing
-            session.DataStorage["B"].Initialize(20); //Set initial value for B in global scope if it has no value assigned yet
-
-            //Storing/Updating
-            session.DataStorage[Scope.Slot, "SetPersonal"] = 20; //Set `SetPersonal` to 20, in scope of the current connected user\slot
-            session.DataStorage[Scope.Global, "SetGlobal"] = 30; //Set `SetGlobal` to 30, in global scope shared among all players (the default scope is global)
-            session.DataStorage["Add"] += 50; //Add 50 to the current value of `Add`
-        }
-
         public void OnDisconnect(string reason)
         {
             if (Connected)
@@ -121,7 +105,6 @@ namespace CatQuest_Randomizer.Archipelago
 
         void OnLocationSent(bool successful)
         {
-            //Log something useful
             Randomizer.Logger.LogInfo($"Check sent successfully: {successful}");
         }
 
