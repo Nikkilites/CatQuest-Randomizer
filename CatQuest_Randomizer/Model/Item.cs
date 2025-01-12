@@ -4,7 +4,7 @@
     {
         public string Id { get; }
         public string Name { get; }
-        public string Player { get; set; }
+        public string Player { get; }
 
         public Item(string id, string name, string player = null)
         {
