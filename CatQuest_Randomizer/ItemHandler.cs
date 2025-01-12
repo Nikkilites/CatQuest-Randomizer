@@ -1,58 +1,62 @@
 ﻿using Archipelago.MultiClient.Net.Helpers;
 using CatQuest_Randomizer.Extentions;
 using CatQuest_Randomizer.Model;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace CatQuest_Randomizer
 {
     public class ItemHandler
     {
-        private List<Item> availableItems;
-        private List<Item> foundItems;
-        //private readonly string DATA_PATH = Path.Combine(Environment.CurrentDirectory, "Modding", "data", "Randomizer");
+        private static readonly object itemLock = new();
+        private readonly Queue<Item> itemQueue = new();
 
-        public ItemHandler()
+        private bool CanReceiveItem
         {
-            availableItems = LoadItems();
+            get
+            {
+                return Game.instance?.player != null;
+            }
         }
 
-        private List<Item> LoadItems()
+        public void OnItemReceived(IReceivedItemsHelper helper)
         {
-            string dataStoragePath = @"E:\Nikki\Programmering\Archipelago\Cat Quest\Randomizer\CatQuest_Randomizer\DataStorage\Items.json";
+            Randomizer.Logger.LogInfo($"Received item from server");
 
-            Randomizer.Logger.LogInfo($"Will load item data from {dataStoragePath}");
+            lock (itemLock)
+            {
+                string itemName = helper.PeekItem().ItemName;
+                Item availableItem = Randomizer.DataStorageHandler.availableItems.FirstOrDefault(item => itemName == item.Name);
 
-            if (!File.Exists(dataStoragePath))
-                throw new FileNotFoundException("Failed to load Item data", dataStoragePath);
+                if (availableItem != null)
+                {
+                    if (helper.Index > Randomizer.SaveDataHandler.ItemIndex)
+                    {
+                        itemQueue.Enqueue(new Item(availableItem.Id, availableItem.Name, helper.PeekItem().Player.Name));
 
-            string json = File.ReadAllText(dataStoragePath);
-            return JsonConvert.DeserializeObject<List<Item>>(json);
+                        Randomizer.Logger.LogInfo($"Enqueued item with name: {itemName}");
+                    }
+                    else
+                    {
+                        Randomizer.Logger.LogError($"Item was already received");
+                    }
+                }
+                else
+                {
+                    Randomizer.Logger.LogError($"Item could not be found on list of items");
+                }
+
+                helper.DequeueItem();
+            }
         }
 
-        public void OnItemReceived(ReceivedItemsHelper helper)
-		{
-            Randomizer.Logger.LogInfo($"Item with name {helper.PeekItem().ItemName} was received");
-
-            Item availableItem = availableItems.FirstOrDefault(item => helper.PeekItem().ItemName == item.Name);
-
-            if (availableItem != null)
+        public void OnFrameUpdate()
+        {
+            lock (itemLock)
             {
-                Randomizer.Logger.LogInfo($"Item was found on list of available items");
-
-                Item item = new(availableItem.Id, availableItem.Name, helper.PeekItem().Player.Name);
-
-                GiveItem(item);
+                if (itemQueue.Count > 0 && CanReceiveItem)
+                    GiveItem(itemQueue.Dequeue());
             }
-            else
-            {
-                Randomizer.Logger.LogError($"Item could not be found on list of items");
-            }
-
-            helper.DequeueItem();
         }
 
         private void GiveItem(Item item)
@@ -76,8 +80,8 @@ namespace CatQuest_Randomizer
                     break;
             }
 
-            foundItems.Add(item);
-            Randomizer.Logger.LogInfo($"Received {item.Name} from {item.Player}");
+            Randomizer.SaveDataHandler.ItemIndex += 1;
+            Randomizer.Logger.LogInfo($"Processed item with name: {item.Name}");
         }
     }
 }

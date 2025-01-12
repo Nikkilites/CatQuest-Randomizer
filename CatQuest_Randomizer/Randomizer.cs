@@ -12,6 +12,7 @@ namespace CatQuest_Randomizer
         public static new ManualLogSource Logger;
 
         public static ConnectionHandler ConnectionHandler { get; private set; }
+        public static DataStorageHandler DataStorageHandler { get; private set; }
         public static ItemHandler ItemHandler { get; private set; }
         public static LocationHandler LocationHandler { get; private set; }
         public static GoalHandler GoalHandler { get; private set; }
@@ -24,6 +25,7 @@ namespace CatQuest_Randomizer
             LocationHandler = new();
             ItemHandler = new();
             GoalHandler = new();
+            DataStorageHandler = new();
 
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
 
