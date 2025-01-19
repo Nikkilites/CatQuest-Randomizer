@@ -11,11 +11,11 @@ namespace CatQuest_Randomizer
         private static readonly object itemLock = new();
         private readonly Queue<Item> itemQueue = new();
 
-        private bool CanReceiveItem
-        {
+        public bool CanReceiveItem 
+        { 
             get
             {
-                return Game.instance?.player != null;
+                return Game.instance.player.canMove;
             }
         }
 
@@ -30,7 +30,7 @@ namespace CatQuest_Randomizer
 
                 if (availableItem != null)
                 {
-                    if (helper.Index > Randomizer.SaveDataHandler.ItemIndex)
+                    if (helper.Index > SaveDataHandler.ItemIndex)
                     {
                         itemQueue.Enqueue(new Item(availableItem.Id, availableItem.Name, helper.PeekItem().Player.Name));
 
@@ -80,8 +80,21 @@ namespace CatQuest_Randomizer
                     break;
             }
 
-            Randomizer.SaveDataHandler.ItemIndex += 1;
+            SaveDataHandler.ItemIndex += 1;
+
             Randomizer.Logger.LogInfo($"Processed item with name: {item.Name}");
+
+            var saveManager = Game.instance.saveManager;
+            var currentSaveObject = AccessTools.Field(typeof(SaveManager), "currentSaveObject").GetValue(saveManager);
+            var updateSaveMethod = AccessTools.Method(typeof(SaveManager), "UpdateSave");
+            var flushMethod = AccessTools.Method(typeof(SaveManager), "Flush");
+
+            if (updateSaveMethod != null & flushMethod != null)
+            {
+                updateSaveMethod.Invoke(saveManager, new[] { currentSaveObject });
+                flushMethod.Invoke(saveManager, null);
+                Randomizer.Logger.LogInfo($"Saved the game");
+            }
         }
     }
 }

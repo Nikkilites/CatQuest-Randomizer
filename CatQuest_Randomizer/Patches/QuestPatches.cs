@@ -1,5 +1,4 @@
-﻿using BepInEx.Logging;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,8 +9,24 @@ namespace CatQuest_Randomizer.Patches
     {
         static void Postfix(Quest __instance)
         {
-            Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestEndPatch");
-            Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
+            if (__instance.isComplete)
+            {
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestEndPatch");
+                Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Quest), nameof(Quest.SetIsComplete))]
+    public class QuestSendOnReloadPatch
+    {
+        static void Postfix(Quest __instance, bool complete)
+        {
+            Randomizer.Logger.LogInfo($"Postfix Completed: Quest is complete: {complete}");
+
+            if (complete)
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestSendOnReloadPatch");
+                Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
         }
     }
 
