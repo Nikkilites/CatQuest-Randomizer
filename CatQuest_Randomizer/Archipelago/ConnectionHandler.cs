@@ -18,7 +18,7 @@ namespace CatQuest_Randomizer.Archipelago
 
         public bool Connect(string server, string player, string pass)
         {
-            Randomizer.Logger.LogInfo("Will try to connect to server.");
+            Randomizer.Logger.LogInfo($"Will try to connect to server with {server}, {player}, {pass}.");
 
             LoginResult result;
 

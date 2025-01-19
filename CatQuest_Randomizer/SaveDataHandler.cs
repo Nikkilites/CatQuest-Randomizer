@@ -4,22 +4,31 @@ using System.IO;
 
 namespace CatQuest_Randomizer
 {
-    public class SaveDataHandler
+    public static class SaveDataHandler
     {
-        private readonly string itemIndexPath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\SaveData\\ItemIndex.json";
-        public int ItemIndex
+        private static readonly string itemIndexPath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\SaveData\\ItemIndex.json";
+        private static readonly string roomInfoPath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\SaveData\\RoomInfo.json";
+        public static int ItemIndex
         {
             get
             {
-                return LoadItemIndex();
+                ItemIndexData data = (ItemIndexData)LoadJson<ItemIndexData>(itemIndexPath);
+                return data.ItemIndex;
             }
             set
             {
                 SaveItemIndex(value);
             }
         }
+        public static RoomInfoData RoomInfo
+        {
+            get
+            {
+                return (RoomInfoData)LoadJson<RoomInfoData>(roomInfoPath);
+            }
+        }
 
-        private void SaveItemIndex(int itemIndex)
+        private static void SaveItemIndex(int itemIndex)
         {
             string directoryPath = Path.GetDirectoryName(itemIndexPath);
             if (!Directory.Exists(directoryPath))
@@ -34,24 +43,56 @@ namespace CatQuest_Randomizer
             Randomizer.Logger.LogInfo($"ItemIndex {itemIndex} saved to {itemIndexPath}");
         }
 
-        private int LoadItemIndex()
+        public static void SaveRoomInfo(string server, string player, string password)
         {
-            if (!File.Exists(itemIndexPath))
+            string directoryPath = Path.GetDirectoryName(roomInfoPath);
+            if (!Directory.Exists(directoryPath))
             {
-                Randomizer.Logger.LogInfo($"File {itemIndexPath} not found. Returning default value 0.");
-                return 0;
+                Directory.CreateDirectory(directoryPath);
+                Randomizer.Logger.LogInfo($"Created directory: {directoryPath}");
             }
 
-            Randomizer.Logger.LogInfo($"Will load ItemIndex from {itemIndexPath}");
-            var json = File.ReadAllText(itemIndexPath);
-            var data = JsonConvert.DeserializeObject<ItemIndexData>(json);
-            Randomizer.Logger.LogInfo($"ItemIndex {data.ItemIndex} loaded from {itemIndexPath}");
-            return data.ItemIndex;
+            Randomizer.Logger.LogInfo($"Will save Room Info to {roomInfoPath}");
+            RoomInfoData roomInfoData = new(server, player, password);
+            string json = JsonConvert.SerializeObject(roomInfoData, Formatting.Indented);
+            File.WriteAllText(roomInfoPath, json);
+            Randomizer.Logger.LogInfo($"Room Info saved to {roomInfoPath}");
+        }
+
+        private static object LoadJson<T>(string filepath)
+        {
+            if (!File.Exists(filepath))
+            {
+                throw new Exception($"File {filepath} not found.");
+            }
+
+            Randomizer.Logger.LogInfo($"Will load data from {filepath}");
+            string json = File.ReadAllText(filepath);
+            T data = JsonConvert.DeserializeObject<T>(json);
+            Randomizer.Logger.LogInfo($"Data {data} loaded from {filepath}");
+            return data;
         }
 
         private class ItemIndexData
         {
             public int ItemIndex { get; set; }
+        }
+
+        public class RoomInfoData
+        {
+            public string Server { get; set; }
+            public string Playername { get; set; }
+            public string Password { get; set; }
+
+            public RoomInfoData(string server, string playername, string password)
+            {
+                Server = server;
+                Playername = playername;
+                if (password == "")
+                    Password = null;
+                else
+                    Password = password;
+            }
         }
     }
 }

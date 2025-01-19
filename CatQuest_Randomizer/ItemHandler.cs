@@ -30,7 +30,7 @@ namespace CatQuest_Randomizer
 
                 if (availableItem != null)
                 {
-                    if (helper.Index > Randomizer.SaveDataHandler.ItemIndex)
+                    if (helper.Index > SaveDataHandler.ItemIndex)
                     {
                         itemQueue.Enqueue(new Item(availableItem.Id, availableItem.Name, helper.PeekItem().Player.Name));
 
@@ -80,7 +80,8 @@ namespace CatQuest_Randomizer
                     break;
             }
 
-            Randomizer.SaveDataHandler.ItemIndex += 1;
+            SaveDataHandler.ItemIndex += 1;
+
             Randomizer.Logger.LogInfo($"Processed item with name: {item.Name}");
         }
     }

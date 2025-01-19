@@ -13,7 +13,6 @@ namespace CatQuest_Randomizer
         public static new ManualLogSource Logger;
 
         public static ConnectionHandler ConnectionHandler { get; private set; }
-        public static SaveDataHandler SaveDataHandler { get; private set; }
         public static DataStorageHandler DataStorageHandler { get; private set; }
         public static ItemHandler ItemHandler { get; private set; }
         public static LocationHandler LocationHandler { get; private set; }
@@ -24,7 +23,6 @@ namespace CatQuest_Randomizer
             Logger = BepInEx.Logging.Logger.CreateLogSource("Cat Quest Logger");
 
             ConnectionHandler = new ConnectionHandler();
-            SaveDataHandler = new SaveDataHandler();
             LocationHandler = new();
             ItemHandler = new();
             GoalHandler = new();
@@ -33,8 +31,6 @@ namespace CatQuest_Randomizer
             SetupFrameUpdater();
 
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
-
-            ConnectionHandler.Connect("localhost", "Nikki", null);
         }
 
         private void SetupFrameUpdater()
