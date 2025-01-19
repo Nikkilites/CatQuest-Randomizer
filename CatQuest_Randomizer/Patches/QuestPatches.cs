@@ -16,6 +16,17 @@ namespace CatQuest_Randomizer.Patches
             }
         }
     }
+
+    [HarmonyPatch(typeof(Quest), nameof(Quest.SetIsComplete))]
+    public class QuestSendOnReloadPatch
+    {
+        static void Postfix(Quest __instance, bool complete)
+        {
+            Randomizer.Logger.LogInfo($"Postfix Completed: Quest is complete: {complete}");
+
+            if (complete)
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestSendOnReloadPatch");
+                Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
         }
     }
 
