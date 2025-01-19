@@ -83,6 +83,18 @@ namespace CatQuest_Randomizer
             SaveDataHandler.ItemIndex += 1;
 
             Randomizer.Logger.LogInfo($"Processed item with name: {item.Name}");
+
+            var saveManager = Game.instance.saveManager;
+            var currentSaveObject = AccessTools.Field(typeof(SaveManager), "currentSaveObject").GetValue(saveManager);
+            var updateSaveMethod = AccessTools.Method(typeof(SaveManager), "UpdateSave");
+            var flushMethod = AccessTools.Method(typeof(SaveManager), "Flush");
+
+            if (updateSaveMethod != null & flushMethod != null)
+            {
+                updateSaveMethod.Invoke(saveManager, new[] { currentSaveObject });
+                flushMethod.Invoke(saveManager, null);
+                Randomizer.Logger.LogInfo($"Saved the game");
+            }
         }
     }
 }
