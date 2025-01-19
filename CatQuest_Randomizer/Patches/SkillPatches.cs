@@ -1,5 +1,4 @@
-﻿using BepInEx.Logging;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 
 namespace CatQuest_Randomizer.Patches
