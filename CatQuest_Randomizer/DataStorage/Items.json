@@ -1,107 +1,98 @@
 ﻿[
   {
     "name": "Royal Art of Water Walking",
-    "id": "art.water",
-    "count": 1
+    "id": "art.water"
   },
   {
     "name": "Royal Art of Flight",
-    "id": "art.flight",
-    "count": 1 
+    "id": "art.flight"
   },
   {
     "name": "Flamepurr",
-    "id": "skill.flamepurr",
-    "count": 1
+    "id": "skill.flamepurr"
   },
   {
     "name": "Healing Paw",
-    "id": "skill.healing",
-    "count": 1
+    "id": "skill.healing_paw"
   },
   {
     "name": "Lightnyan",
-    "id": "skill.lightnyan",
-    "count": 1
+    "id": "skill.lightnyan"
   },
   {
     "name": "Cattrap",
-    "id": "skill.cattrap",
-    "count": 1 
+    "id": "skill.cattrap"
   },
   {
     "name": "Purrserk",
-    "id": "skill.purrserk",
-    "count": 1 
+    "id": "skill.purrserk"
   },
   {
     "name": "Astropaw",
-    "id": "skill.astropaw",
-    "count": 1 
+    "id": "skill.astropaw"
+  },
+  {
+    "name": "Freezepaw",
+    "id": "skill.freezepaw"
   },
   {
     "name": "Golden Key",
-    "id": "key.golden",
-    "count": 1 
+    "id": "key.golden"
   },
   {
     "name": "50 Gold",
-    "id": "gold.50",
-    "count": 2 
-  },
-  {
-    "name": "200 Gold",
-    "id": "gold.200",
-    "count": 3
+    "id": "gold.50"
   },
   {
     "name": "500 Gold",
-    "id": "gold.500",
-    "count": 5 
+    "id": "gold.500"
   },
   {
     "name": "750 Gold",
-    "id": "gold.750",
-    "count": 2
+    "id": "gold.750"
   },
   {
     "name": "1000 Gold",
-    "id": "gold.1000",
-    "count": 1
+    "id": "gold.1000"
   },
   {
-    "name": "500 Exp",
-    "id": "exp.500",
-    "count": 5
+    "name": "5000 Gold",
+    "id": "gold.5000"
   },
   {
-    "name": "1000 Exp",
-    "id": "exp.1000",
-    "count": 5
+    "name": "10K Gold",
+    "id": "gold.10000"
   },
   {
     "name": "5000 Exp",
-    "id": "exp.5000",
-    "count": 5
+    "id": "exp.5000"
   },
   {
     "name": "7500 Exp",
-    "id": "exp.7500",
-    "count": 5
+    "id": "exp.7500"
   },
   {
-    "name": "10000 Exp",
-    "id": "exp.10000",
-    "count": 5
+    "name": "10K Exp",
+    "id": "exp.10000"
   },
   {
-    "name": "20000 Exp",
-    "id": "exp.20000",
-    "count": 2 
+    "name": "20K Exp",
+    "id": "exp.20000"
+  },
+  {
+    "name": "50K Exp",
+    "id": "exp.50000"
+  },
+  {
+    "name": "100K Exp",
+    "id": "exp.100000"
   },
   {
     "name": "500 Exp",
-    "id": "exp.500",
-    "count": 0 
+    "id": "exp.500"
+  },
+  {
+    "name": "1000 Exp",
+    "id": "exp.1000"
   }
 ]
