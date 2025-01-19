@@ -11,11 +11,11 @@ namespace CatQuest_Randomizer
         private static readonly object itemLock = new();
         private readonly Queue<Item> itemQueue = new();
 
-        private bool CanReceiveItem
-        {
+        public bool CanReceiveItem 
+        { 
             get
             {
-                return Game.instance?.player != null;
+                return Game.instance.player.canMove;
             }
         }
 
