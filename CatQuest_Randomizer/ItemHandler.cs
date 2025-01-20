@@ -1,6 +1,7 @@
 ﻿using Archipelago.MultiClient.Net.Helpers;
 using CatQuest_Randomizer.Extentions;
 using CatQuest_Randomizer.Model;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -61,6 +62,8 @@ namespace CatQuest_Randomizer
 
         private void GiveItem(Item item)
         {
+            UnlockableExtensions unlockableExtensions = new();
+
             switch (item.GetItemType())
             {
                 case ItemType.skill:
@@ -68,11 +71,10 @@ namespace CatQuest_Randomizer
                     skillExtensions.AddSkill(item);
                     break;
                 case ItemType.art:
-                    UnlockableExtensions unlockableExtensions = new();
                     unlockableExtensions.AddRoyalArt(item);
                     break;
                 case ItemType.key:
-                    //Not Implemented
+                    unlockableExtensions.AddKey(item);
                     break;
                 default:
                     CollectableExtentions collectableExtentions = new();

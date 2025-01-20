@@ -20,6 +20,9 @@ namespace CatQuest_Randomizer.Patches
                 case Unlockables.WaterWalking:
                     Randomizer.Logger.LogInfo($"Obtaining Water Walking was disabled");
                     break;
+                case Unlockables.GoldChest:
+                    Randomizer.Logger.LogInfo($"Obtaining Golden Key was disabled");
+                    break;
                 default:
                     Game.instance.Unlock(__instance.value);
                     break;

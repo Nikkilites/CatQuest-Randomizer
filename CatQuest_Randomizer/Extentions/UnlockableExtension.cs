@@ -14,5 +14,14 @@ namespace CatQuest_Randomizer.Extentions
 
 			CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
 		}
+
+		public void AddKey(Item item)
+		{
+			Randomizer.Logger.LogInfo($"Adding golden key to player");
+
+			Game.instance.Unlock(Unlockables.GoldChest);
+
+			CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
+		}
 	}
 }
