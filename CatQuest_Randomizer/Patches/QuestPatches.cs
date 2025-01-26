@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +28,49 @@ namespace CatQuest_Randomizer.Patches
                 Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
         }
     }
+
+
+    [HarmonyPatch(typeof(Quest), nameof(Quest.StartAt))]
+    public class QuestUnblockBorderPatch
+    {
+        static Dictionary<string, Func<int, int>> questLogic = new Dictionary<string, Func<int, int>>
+            {
+                { "MainQuest_002", (idx) => (idx > 7 && idx <= 23) ? 7 : idx },
+                { "MainQuest_003", (idx) => (idx > 17 && idx <= 33) ? 17 : idx },
+                { "MainQuest_004", (idx) => (idx > 20 && idx <= 30) ? 20 : idx },
+                { "the_whisperer_five", (idx) => (idx > 10 && idx <= 25) ? 10 : idx },
+                { "distraction", (idx) => (idx > 16 && idx <= 37) ? 16 : idx },
+                { "faded_king_five", (idx) => (idx > 6 && idx <= 75) ? 6 : idx },
+            };
+
+        static void Prefix(Quest __instance, ref int index)
+        {
+            index = GetUnblockedIndex(__instance.questId, index);
+        }
+
+        static private int GetUnblockedIndex(string questId, int index)
+        {
+            int newIndex = questLogic.ContainsKey(questId) ? questLogic[questId](index) : index;
+
+            if (index != newIndex)
+            {
+                Randomizer.Logger.LogInfo($"Quest {questId} will start at index {newIndex} instead of index {index}");
+            }
+
+            return newIndex;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(Quest), nameof(Quest.Next))]
+    public class QuestLogIndexPatch
+    {
+        static void Postfix(Quest __instance)
+        {
+            Randomizer.Logger.LogInfo($"Quest {__instance.questId} Next. Index: {__instance.index}. SubIndex:{__instance.subIndex}");
+        }
+    }
+
 
     [HarmonyPatch(typeof(Quest), nameof(Quest.Init))]
     public class RemoveQuestRewardsAndPrereqsPatch
