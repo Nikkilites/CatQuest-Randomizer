@@ -13,7 +13,7 @@ namespace CatQuest_Randomizer.Patches
             if (__instance.isComplete)
             {
                 Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestCheckPatch");
-                Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
+                Randomizer.LocationHandler.CheckLocation(__instance.questId);
             }
         }
     }
@@ -24,8 +24,10 @@ namespace CatQuest_Randomizer.Patches
         static void Postfix(Quest __instance, bool complete)
         {
             if (complete)
+            {
                 Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestCheckOnReloadPatch");
-                Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
+                Randomizer.LocationHandler.CheckLocation(__instance.questId);
+            }
         }
     }
 
