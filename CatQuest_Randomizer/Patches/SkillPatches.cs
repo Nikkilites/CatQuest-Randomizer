@@ -3,6 +3,27 @@ using System.Collections.Generic;
 
 namespace CatQuest_Randomizer.Patches
 {
+    [HarmonyPatch(typeof(WorldButton), nameof(WorldButton.ShowButton))]
+    public class DisableBuySkillPatch
+    {
+        static bool Prefix(GameTrigger trigger, ref bool canEnter)
+        {
+            ArcaneAltarTrigger arcaneAltarTrigger = trigger as ArcaneAltarTrigger;
+            if (arcaneAltarTrigger != null)
+            {
+                Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
+
+                if (!skill.isLearned)
+                {
+                    canEnter = false;
+                    Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");
+                }
+            }
+            return true;
+        }
+    }
+
+
     [HarmonyPatch(typeof(GiveBlock), nameof(GiveBlock.Start))]
     public class DisableObtainingSkillPatch
     {
