@@ -118,7 +118,7 @@ namespace CatQuest_Randomizer.Patches
                     break;
 
                 case "pawtato_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_007" });
+                    RemovePrerequisites(__instance, new[] { "MainQuest_007", "waters_five" });
                     break;
 
                 case "waters_one":
