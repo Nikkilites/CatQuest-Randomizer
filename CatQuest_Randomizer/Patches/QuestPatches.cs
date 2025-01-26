@@ -5,27 +5,25 @@ using System.Linq;
 namespace CatQuest_Randomizer.Patches
 {
     [HarmonyPatch(typeof(Quest), nameof(Quest.End))]
-    public class QuestEndPatch
+    public class QuestCheckPatch
     {
         static void Postfix(Quest __instance)
         {
             if (__instance.isComplete)
             {
-                Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestEndPatch");
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestCheckPatch");
                 Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
             }
         }
     }
 
     [HarmonyPatch(typeof(Quest), nameof(Quest.SetIsComplete))]
-    public class QuestSendOnReloadPatch
+    public class QuestCheckOnReloadPatch
     {
         static void Postfix(Quest __instance, bool complete)
         {
-            Randomizer.Logger.LogInfo($"Postfix Completed: Quest is complete: {complete}");
-
             if (complete)
-                Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestSendOnReloadPatch");
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestCheckOnReloadPatch");
                 Randomizer.LocationHandler.CheckedQuestLocation(__instance.questId);
         }
     }
