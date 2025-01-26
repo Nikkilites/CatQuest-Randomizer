@@ -16,7 +16,11 @@ namespace CatQuest_Randomizer
         { 
             get
             {
-                return Game.instance.player.canMove;
+                return (
+                    Game.instance.player.canMove 
+                    && !Game.instance.IsPaused 
+                    && !Game.instance.player.IsDead
+                );
             }
         }
 
