@@ -98,7 +98,6 @@ namespace CatQuest_Randomizer.Patches
                     break;
 
                 default:
-                    // Handle other quests or leave empty
                     break;
             }
         }
