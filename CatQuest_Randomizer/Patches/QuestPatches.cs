@@ -30,38 +30,6 @@ namespace CatQuest_Randomizer.Patches
     }
 
 
-    [HarmonyPatch(typeof(Quest), nameof(Quest.StartAt))]
-    public class QuestUnblockBorderPatch
-    {
-        static Dictionary<string, Func<int, int>> questLogic = new Dictionary<string, Func<int, int>>
-            {
-                { "MainQuest_002", (idx) => (idx > 7 && idx <= 23) ? 7 : idx },
-                { "MainQuest_003", (idx) => (idx > 17 && idx <= 33) ? 17 : idx },
-                { "MainQuest_004", (idx) => (idx > 20 && idx <= 30) ? 20 : idx },
-                { "the_whisperer_five", (idx) => (idx > 10 && idx <= 25) ? 10 : idx },
-                { "distraction", (idx) => (idx > 16 && idx <= 37) ? 16 : idx },
-                { "faded_king_five", (idx) => (idx > 6 && idx <= 75) ? 6 : idx },
-            };
-
-        static void Prefix(Quest __instance, ref int index)
-        {
-            index = GetUnblockedIndex(__instance.questId, index);
-        }
-
-        static private int GetUnblockedIndex(string questId, int index)
-        {
-            int newIndex = questLogic.ContainsKey(questId) ? questLogic[questId](index) : index;
-
-            if (index != newIndex)
-            {
-                Randomizer.Logger.LogInfo($"Quest {questId} will start at index {newIndex} instead of index {index}");
-            }
-
-            return newIndex;
-        }
-    }
-
-
     [HarmonyPatch(typeof(Quest), nameof(Quest.Next))]
     public class QuestLogIndexPatch
     {
@@ -79,70 +47,28 @@ namespace CatQuest_Randomizer.Patches
         {
             RemoveQuestRewards(__instance);
 
-            switch (__instance.questId)
+            var questPrerequisites = new Dictionary<string, string[]>
             {
-                case "greatspirit_one":
-                    RemovePrerequisites(__instance, new[] { "waters_five" });
-                    break;
+                { "greatspirit_one", new[] { "waters_five" } },
+                { "greatspirit_four", new[] { "MainQuest_004" } },
+                { "missing_one", new[] { "faded_king_five" } },
+                { "wyvern_attack", new[] { "faded_king_five" } },
+                { "the_heirloom", new[] { "faded_king_five", "waters_five", "the_whisperer_five", "MainQuest_006" } },
+                { "faded_king_one", new[] { "MainQuest_002" } },
+                { "furbidden_mystery", new[] { "MainQuest_007" } },
+                { "ultimate_dragonsbane", new[] { "MainQuest_010" } },
+                { "the_whisperer_one", new[] { "MainQuest_002" } },
+                { "pawtato_one", new[] { "MainQuest_007", "waters_five" } },
+                { "waters_one", new[] { "MainQuest_005" } },
+                { "advertising_one", new[] { "faded_king_five", "waters_five", "magesold_four", "MainQuest_008" } },
+                { "slashy_one", new[] { "waters_five" } },
+                { "west_four", new[] { "MainQuest_003" } },
+                { "magesold_one", new[] { "MainQuest_006" } }
+            };
 
-                case "greatspirit_four":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_004" });
-                    break;
-
-                case "missing_one":
-                    RemovePrerequisites(__instance, new[] { "faded_king_five" });
-                    break;
-
-                case "wyvern_attack":
-                    RemovePrerequisites(__instance, new[] { "faded_king_five" });
-                    break;
-
-                case "the_heirloom":
-                    RemovePrerequisites(__instance, new[] { "faded_king_five", "waters_five", "the_whisperer_five", "MainQuest_006" });
-                    break;
-
-                case "faded_king_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_002" });
-                    break;
-
-                case "furbidden_mystery":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_007" });
-                    break;
-
-                case "ultimate_dragonsbane":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_010" });
-                    break;
-
-                case "the_whisperer_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_002" });
-                    break;
-
-                case "pawtato_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_007", "waters_five" });
-                    break;
-
-                case "waters_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_005" });
-                    break;
-
-                case "advertising_one":
-                    RemovePrerequisites(__instance, new[] { "faded_king_five", "waters_five", "magesold_four", "MainQuest_008" });
-                    break;
-
-                case "slashy_one":
-                    RemovePrerequisites(__instance, new[] { "waters_five" });
-                    break;
-
-                case "west_four":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_003" });
-                    break;
-
-                case "magesold_one":
-                    RemovePrerequisites(__instance, new[] { "MainQuest_006" });
-                    break;
-
-                default:
-                    break;
+            if (questPrerequisites.TryGetValue(__instance.questId, out var prerequisites))
+            {
+                RemovePrerequisites(__instance, prerequisites);
             }
         }
 
