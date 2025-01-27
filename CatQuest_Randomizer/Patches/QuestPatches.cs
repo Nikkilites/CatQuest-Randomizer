@@ -34,14 +34,36 @@ namespace CatQuest_Randomizer.Patches
     public class QuestUnblockBorderPatch
     {
         static Dictionary<string, Func<int, int>> questLogic = new Dictionary<string, Func<int, int>>
-            {
-                { "MainQuest_002", (idx) => (idx > 7 && idx <= 23) ? 7 : idx },
-                { "MainQuest_003", (idx) => (idx > 17 && idx <= 33) ? 17 : idx },
-                { "MainQuest_004", (idx) => (idx > 20 && idx <= 30) ? 20 : idx },
-                { "the_whisperer_five", (idx) => (idx > 10 && idx <= 25) ? 10 : idx },
-                { "distraction", (idx) => (idx > 16 && idx <= 37) ? 16 : idx },
-                { "faded_king_five", (idx) => (idx > 6 && idx <= 75) ? 6 : idx },
-            };
+        {
+            { "MainQuest_002", (idx) => Clamp(idx, 7, 23) },
+            { "MainQuest_003", (idx) => Clamp(idx, 17, 33) },
+            { "MainQuest_004", (idx) => Clamp(idx, 20, 30) },
+            { "MainQuest_005", (idx) => Clamp(idx, 35, 56) },
+            { "MainQuest_008", (idx) => Clamp(idx, 10, 30) },
+            { "MainQuest_011", (idx) => Clamp(idx, 56, 72) },
+            { "MainQuest_012", (idx) => Clamp(idx, 12, 19) },
+            { "the_whisperer_five", (idx) => Clamp(idx, 10, 25) },
+            { "distraction", (idx) => Clamp(idx, 16, 37) },
+            { "faded_king_five", (idx) => Clamp(idx, 6, 75) },
+            { "waters_four", (idx) => Clamp(idx, 11, 54) },
+            { "sanctuary_four", (idx) => Clamp(idx, 22, 46) },
+            { "west_four", (idx) => Clamp(idx, 36, 61) },
+            { "darkpast_two", (idx) => Clamp(idx, 21, 27) },
+            { "kitmas_two", (idx) => Clamp(idx, 53, 82) },
+            { "magesold_two", (idx) => Clamp(idx, 20, 45) },
+            { "darkpast_four", (idx) => Clamp(idx, 3, 23) },
+            { "magesold_four", (idx) => Clamp(idx, 38, 81) },
+            { "greatspirit_four", (idx) => Clamp(idx, 17, 81) },
+            { "the_heirloom", (idx) => Clamp(idx, 38, 52) },
+            { "kitmas_four", (idx) => Clamp(idx, 10, 39) },
+            { "slashy_one", (idx) => Clamp(idx, 84, 155) },
+        };
+
+        static Dictionary<string, Func<int, int>> multiQuestLogic = new Dictionary<string, Func<int, int>>
+        {
+            { "MainQuest_009", (idx) => ClampMulti(idx, 4, 19, 22, 33) },
+            { "kitmas_five", (idx) => ClampMulti(idx, 0, 33, 66, 102) },
+        };
 
         static void Prefix(Quest __instance, ref int index)
         {
@@ -50,7 +72,20 @@ namespace CatQuest_Randomizer.Patches
 
         static private int GetUnblockedIndex(string questId, int index)
         {
-            int newIndex = questLogic.ContainsKey(questId) ? questLogic[questId](index) : index;
+            int newIndex;
+
+            if (multiQuestLogic.ContainsKey(questId))
+            {
+                newIndex = multiQuestLogic[questId](index);
+            }
+            else if (questLogic.ContainsKey(questId))
+            {
+                newIndex = questLogic[questId](index);
+            }
+            else
+            {
+                newIndex = index;
+            }
 
             if (index != newIndex)
             {
@@ -58,6 +93,22 @@ namespace CatQuest_Randomizer.Patches
             }
 
             return newIndex;
+        }
+
+        static private int Clamp(int index, int min, int max)
+        {
+            return (index > min && index <= max) ? min : index;
+        }
+
+        static private int ClampMulti(int index, int min1, int max1, int min2, int max2)
+        {
+            if (index > min1 && index <= max1)
+                return min1;
+
+            if (index > min2 && index <= max2)
+                return min2;
+
+            return index;
         }
     }
 
