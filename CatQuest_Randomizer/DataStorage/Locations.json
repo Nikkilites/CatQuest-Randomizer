@@ -314,5 +314,33 @@
   {
     "id": "resolution_A",
     "name": "IV. The Twin Resolution"
+  },
+  {
+    "id": "flamepurr",
+    "name": "Temple: Flamepurr"
+  },
+  {
+    "id": "healing_paw",
+    "name": "Temple: Healing Paw"
+  },
+  {
+    "id": "lightnyan",
+    "name": "Temple: Lightnyan"
+  },
+  {
+    "id": "cattrap",
+    "name": "Temple: Cattrap"
+  },
+  {
+    "id": "purrserk",
+    "name": "Temple: Purrserk"
+  },
+  {
+    "id": "astropaw",
+    "name": "Temple: Astropaw"
+  },
+  {
+    "id": "freezepaw",
+    "name": "Temple: Freezepaw"
   }
 ]
