@@ -13,7 +13,7 @@ namespace CatQuest_Randomizer.Patches
             {
                 Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
 
-                if (!skill.isLearned)
+                if (!skill.isLearned) //|| setting is on)
                 {
                     canEnter = false;
                     Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");

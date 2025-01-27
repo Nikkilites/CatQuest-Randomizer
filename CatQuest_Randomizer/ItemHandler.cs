@@ -72,7 +72,7 @@ namespace CatQuest_Randomizer
             {
                 case ItemType.skill:
                     SkillExtensions skillExtensions = new();
-                    skillExtensions.AddSkill(item);
+                    skillExtensions.AddOrUpdateSkill(item);
                     break;
                 case ItemType.art:
                     unlockableExtensions.AddRoyalArt(item);
