@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 using TMPro;
 using static CatQuest_Randomizer.SaveDataHandler;
+using UnityEngine;
 
 namespace CatQuest_Randomizer.Patches
 {
@@ -13,8 +13,6 @@ namespace CatQuest_Randomizer.Patches
         static void Prefix()
         {
             Randomizer.Logger.LogInfo("New game was started");
-            //When implemented, gets implemented as an extension that takes the info written in the ui to login.
-            //SaveDataHandler.SaveRoomInfo(server, player, password);
             ItemIndex = 0;
         }
     }
@@ -40,12 +38,14 @@ namespace CatQuest_Randomizer.Patches
     }
 
     [HarmonyPatch(typeof(NewGamePanel), "Start")]
-    public class AddArchipelagoMenuPatch
+    public class EditMenuOptionPatch
     {
+        private static NewGamePanelOption menuItem;
+
         static void Prefix(NewGamePanel __instance)
         {
-            Randomizer.Logger.LogInfo("Will add extra menu item for archipelago.");
-            
+            Randomizer.Logger.LogInfo("Will edit menu item for archipelago.");
+
             // Access private field listItems
             FieldInfo listField = typeof(NewGamePanel).GetField("listItems", BindingFlags.NonPublic | BindingFlags.Instance);
             if (listField == null)
@@ -63,36 +63,115 @@ namespace CatQuest_Randomizer.Patches
             }
 
             // Clone the last item
-            var lastItem = listItems[listItems.Count - 1];
-            var newItem = Object.Instantiate(lastItem, lastItem.transform.parent);
-            newItem.name = lastItem.name + "Archipelago Setup";
+            menuItem = listItems[listItems.Count - 1];
+
+            menuItem.SetName("New Archipelago Game");
 
             // Access and modify private 'optionDescription' field
             FieldInfo descField = typeof(NewGamePanelOption).GetField("optionDescription", BindingFlags.NonPublic | BindingFlags.Instance);
             if (descField != null)
             {
-                var textComponent = descField.GetValue(newItem) as TextMeshProUGUI;
+                var textComponent = descField.GetValue(menuItem) as TextMeshProUGUI;
                 if (textComponent != null)
                 {
-                    textComponent.text = "Setup room info for Archipelago";
+                    textComponent.text = "Setup room info and start Archipelago";
                 }
             }
             else
             {
                 Randomizer.Logger.LogError("Could not find 'optionDescription' field in NewGamePanelOption.");
             }
-
-            newItem.OnMouseClick += ArchipelagoListItem_OnMouseClick;
-
-            newItem.SetName("Archipelago");
-
-            // Add the clone to the list
-            listItems.Add(newItem);
         }
-        public static void ArchipelagoListItem_OnMouseClick(NewGamePanelOption obj)
+    }
+
+    [HarmonyPatch(typeof(Title), "Start")]
+    public class ArchipelagoLogoPatch
+    {
+        static void Postfix(Title __instance)
         {
-            Randomizer.Logger.LogInfo("Will show Archipelago Room Info Pop Up here.");
-            //Open Archipelago Room Info Pop Up here, then return
+
+            FieldInfo imgField = typeof(Title).GetField("title", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (imgField != null)
+            {
+                var titleImg = imgField.GetValue(__instance) as UnityEngine.UI.Image;
+                if (titleImg != null && Randomizer.DataStorageHandler.apTitleSprite != null)
+                {
+                    titleImg.sprite = Randomizer.DataStorageHandler.apTitleSprite;
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Title), "ShowConfirmationPanel")]
+    public class ConfirmationPanelPatch
+    {
+        static void Prefix(Title __instance, ref string title, ref string confirmation, ref System.Action onYes, ref System.Action onNo)
+        {
+            if (title != "New Game")
+                return;
+
+            Randomizer.Logger.LogInfo("Will make custom pop up for archipelago.");
+
+            title = "Archipelago Setup";
+            confirmation = "Enter your room information in ...\\ArchipelagoRandomizer\\SaveData\\RoomInfo.json";
+
+            //FieldInfo confirmationPanelField = typeof(Title).GetField("confirmationPanel", BindingFlags.NonPublic | BindingFlags.Instance);
+            //if (confirmationPanelField == null) return;
+
+            //var confirmationPanel = confirmationPanelField.GetValue(__instance) as ConfirmationPanel;
+            //if (confirmationPanel == null) return;
+
+            //FieldInfo confirmationField = typeof(ConfirmationPanel).GetField("confirmation", BindingFlags.NonPublic | BindingFlags.Instance);
+            //if (confirmationField == null) return;
+
+            //var confirmationText = confirmationField.GetValue(confirmationPanel) as TextMeshProUGUI;
+            //if (confirmationText == null) return;
+
+            //// Clone the GameObject
+            //var newTextObj = Object.Instantiate(confirmationText.gameObject, confirmationText.transform.parent);
+            //newTextObj.name = "ArchipelagoRoomPrompt";
+
+            //// Move it downward
+            //var rt = newTextObj.GetComponent<RectTransform>();
+            //rt.anchoredPosition -= new Vector2(0, rt.sizeDelta.y + 10); // move down
+
+            //// Update the text
+            //var tmp = newTextObj.GetComponent<TextMeshProUGUI>();
+            //tmp.text = "Enter your Archipelago Server, Slot, and Password.";
+
+
+
+            //var originalOnNo = onNo;
+            //onNo = () =>
+            //{
+            //    Randomizer.Logger.LogInfo("Archipelago NO was clicked!");
+            //    Object.Destroy(newTextObj);
+
+            //    originalOnNo?.Invoke();
+            //};
+
+            //var originalOnYes = onYes;
+            //onYes = () =>
+            //{
+            //    Randomizer.Logger.LogInfo("Archipelago YES was clicked!");
+            //    //SaveDataHandler.SaveRoomInfo(string server, string player, string password)
+
+            //    originalOnYes?.Invoke();
+            //};
+        }
+    }
+
+    [HarmonyPatch(typeof(ConfirmationPanel), "Hide")]
+    public class ConfirmationPanelHidePatch
+    {
+        static void Prefix(ConfirmationPanel __instance)
+        {
+            Transform extraPrompt = __instance.transform.Find("ArchipelagoRoomPrompt");
+            if (extraPrompt != null)
+            {
+                UnityEngine.Object.Destroy(extraPrompt.gameObject);
+                Randomizer.Logger.LogInfo("Destroyed ArchipelagoRoomPrompt after confirmation panel closed.");
+            }
         }
     }
 }
