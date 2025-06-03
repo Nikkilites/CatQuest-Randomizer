@@ -74,7 +74,7 @@ namespace CatQuest_Randomizer.Patches
                 var textComponent = descField.GetValue(menuItem) as TextMeshProUGUI;
                 if (textComponent != null)
                 {
-                    textComponent.text = "Setup room info and start Archipelago";
+                    textComponent.text = "Connect to server and start game";
                 }
             }
             else
@@ -113,65 +113,7 @@ namespace CatQuest_Randomizer.Patches
             Randomizer.Logger.LogInfo("Will make custom pop up for archipelago.");
 
             title = "Archipelago Setup";
-            confirmation = "Enter your room information in ...\\ArchipelagoRandomizer\\SaveData\\RoomInfo.json";
-
-            //FieldInfo confirmationPanelField = typeof(Title).GetField("confirmationPanel", BindingFlags.NonPublic | BindingFlags.Instance);
-            //if (confirmationPanelField == null) return;
-
-            //var confirmationPanel = confirmationPanelField.GetValue(__instance) as ConfirmationPanel;
-            //if (confirmationPanel == null) return;
-
-            //FieldInfo confirmationField = typeof(ConfirmationPanel).GetField("confirmation", BindingFlags.NonPublic | BindingFlags.Instance);
-            //if (confirmationField == null) return;
-
-            //var confirmationText = confirmationField.GetValue(confirmationPanel) as TextMeshProUGUI;
-            //if (confirmationText == null) return;
-
-            //// Clone the GameObject
-            //var newTextObj = Object.Instantiate(confirmationText.gameObject, confirmationText.transform.parent);
-            //newTextObj.name = "ArchipelagoRoomPrompt";
-
-            //// Move it downward
-            //var rt = newTextObj.GetComponent<RectTransform>();
-            //rt.anchoredPosition -= new Vector2(0, rt.sizeDelta.y + 10); // move down
-
-            //// Update the text
-            //var tmp = newTextObj.GetComponent<TextMeshProUGUI>();
-            //tmp.text = "Enter your Archipelago Server, Slot, and Password.";
-
-
-
-            //var originalOnNo = onNo;
-            //onNo = () =>
-            //{
-            //    Randomizer.Logger.LogInfo("Archipelago NO was clicked!");
-            //    Object.Destroy(newTextObj);
-
-            //    originalOnNo?.Invoke();
-            //};
-
-            //var originalOnYes = onYes;
-            //onYes = () =>
-            //{
-            //    Randomizer.Logger.LogInfo("Archipelago YES was clicked!");
-            //    //SaveDataHandler.SaveRoomInfo(string server, string player, string password)
-
-            //    originalOnYes?.Invoke();
-            //};
-        }
-    }
-
-    [HarmonyPatch(typeof(ConfirmationPanel), "Hide")]
-    public class ConfirmationPanelHidePatch
-    {
-        static void Prefix(ConfirmationPanel __instance)
-        {
-            Transform extraPrompt = __instance.transform.Find("ArchipelagoRoomPrompt");
-            if (extraPrompt != null)
-            {
-                UnityEngine.Object.Destroy(extraPrompt.gameObject);
-                Randomizer.Logger.LogInfo("Destroyed ArchipelagoRoomPrompt after confirmation panel closed.");
-            }
+            confirmation = "Is your room info updated in ...\\ArchipelagoRandomizer\\SaveData\\RoomInfo.json ?";
         }
     }
 }
