@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using static CatQuest_Randomizer.SaveDataHandler;
-using UnityEngine;
+using UnityEngine.UI;
 
 namespace CatQuest_Randomizer.Patches
 {
@@ -89,11 +89,10 @@ namespace CatQuest_Randomizer.Patches
     {
         static void Postfix(Title __instance)
         {
-
             FieldInfo imgField = typeof(Title).GetField("title", BindingFlags.NonPublic | BindingFlags.Instance);
             if (imgField != null)
             {
-                var titleImg = imgField.GetValue(__instance) as UnityEngine.UI.Image;
+                var titleImg = imgField.GetValue(__instance) as Image;
                 if (titleImg != null && Randomizer.DataStorageHandler.apTitleSprite != null)
                 {
                     titleImg.sprite = Randomizer.DataStorageHandler.apTitleSprite;
