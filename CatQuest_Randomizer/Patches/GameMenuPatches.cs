@@ -85,6 +85,23 @@ namespace CatQuest_Randomizer.Patches
     }
 
     [HarmonyPatch(typeof(Title), "Start")]
+    public class ArchipelagoVersionPatch
+    {
+        static void Prefix(Title __instance)
+        {
+            FieldInfo copyrightField = typeof(Title).GetField("copyright", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (copyrightField != null)
+            {
+                var copyrightImg = copyrightField.GetValue(__instance) as TextMeshProUGUI;
+                if (copyrightImg != null && Randomizer.DataStorageHandler.apTitleSprite != null)
+                {
+                    copyrightImg.text = copyrightImg.text + " " + Randomizer.DataStorageHandler.modInfo.ModVersion + ".";
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Title), "Start")]
     public class ArchipelagoLogoPatch
     {
         static void Postfix(Title __instance)

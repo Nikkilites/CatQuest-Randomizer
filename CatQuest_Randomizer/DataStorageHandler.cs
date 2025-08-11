@@ -11,12 +11,14 @@ namespace CatQuest_Randomizer
     {
         public List<Item> availableItems;
         public IEnumerable<Location> locations;
+        public ModInfo modInfo;
         public Sprite apLogoSprite;
         public Sprite apTitleSprite;
         private readonly string itemStoragePath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json";
 
         public DataStorageHandler()
         {
+            modInfo = (ModInfo)LoadJson<ModInfo>($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\ModInfo.json");
             availableItems = LoadItems();
             locations = LoadLocations();
             apLogoSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\ap-logo.png");
@@ -60,6 +62,24 @@ namespace CatQuest_Randomizer
 
             // Create sprite
             return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+        private static object LoadJson<T>(string filepath)
+        {
+            if (!File.Exists(filepath))
+            {
+                throw new Exception($"File {filepath} not found.");
+            }
+
+            Randomizer.Logger.LogInfo($"Will load data from {filepath}");
+            string json = File.ReadAllText(filepath);
+            T data = JsonConvert.DeserializeObject<T>(json);
+            Randomizer.Logger.LogInfo($"Data {data} loaded from {filepath}");
+            return data;
+        }
+
+        public class ModInfo
+        {
+            public string ModVersion { get; set; }
         }
     }
 }
