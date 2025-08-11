@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CatQuest_Randomizer.Model;
 using Newtonsoft.Json;
 using System.IO;
+using UnityEngine;
 
 namespace CatQuest_Randomizer
 {
@@ -10,15 +11,20 @@ namespace CatQuest_Randomizer
     {
         public List<Item> availableItems;
         public IEnumerable<Location> locations;
-        private readonly string itemStoragePath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json";
+        public ModInfo modInfo;
+        public Sprite apLogoSprite;
+        public Sprite apTitleSprite;
 
         public DataStorageHandler()
         {
-            availableItems = LoadItems();
-            locations = LoadLocations();
+            modInfo = (ModInfo)HelperMethods.LoadJson<ModInfo>($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\ModInfo.json");
+            availableItems = LoadItems($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json");
+            locations = LoadLocations($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Locations.json");
+            apLogoSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\ap-logo.png");
+            apTitleSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\CatQuestArchiLogo.png");
         }
 
-        private List<Item> LoadItems()
+        private List<Item> LoadItems(string itemStoragePath)
         {
             Randomizer.Logger.LogInfo($"Will load item data from {itemStoragePath}");
 
@@ -29,10 +35,8 @@ namespace CatQuest_Randomizer
             return JsonConvert.DeserializeObject<List<Item>>(json);
         }
 
-        private IEnumerable<Location> LoadLocations()
+        private IEnumerable<Location> LoadLocations(string locationsPath)
         {
-            string locationsPath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Locations.json";
-
             Randomizer.Logger.LogInfo($"Will load location data from {locationsPath}");
 
             if (!File.Exists(locationsPath))
@@ -40,6 +44,26 @@ namespace CatQuest_Randomizer
 
             string json = File.ReadAllText(locationsPath);
             return JsonConvert.DeserializeObject<List<Location>>(json);
+        }
+
+        private Sprite LoadAsSprite(string spritePath)
+        {
+            Randomizer.Logger.LogInfo($"Will load sprite from {spritePath}");
+
+            if (!File.Exists(spritePath))
+                throw new FileNotFoundException("Failed to load location data", spritePath);
+
+            byte[] imageData = File.ReadAllBytes(spritePath);
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(imageData); // Load PNG into texture
+
+            // Create sprite
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+
+        public class ModInfo
+        {
+            public string ModVersion { get; set; }
         }
     }
 }

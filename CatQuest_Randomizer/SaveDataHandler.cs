@@ -12,7 +12,7 @@ namespace CatQuest_Randomizer
         {
             get
             {
-                ItemIndexData data = (ItemIndexData)LoadJson<ItemIndexData>(itemIndexPath);
+                ItemIndexData data = (ItemIndexData)HelperMethods.LoadJson<ItemIndexData>(itemIndexPath);
                 return data.ItemIndex;
             }
             set
@@ -24,7 +24,7 @@ namespace CatQuest_Randomizer
         {
             get
             {
-                return (RoomInfoData)LoadJson<RoomInfoData>(roomInfoPath);
+                return (RoomInfoData)HelperMethods.LoadJson<RoomInfoData>(roomInfoPath);
             }
         }
 
@@ -57,20 +57,6 @@ namespace CatQuest_Randomizer
             string json = JsonConvert.SerializeObject(roomInfoData, Formatting.Indented);
             File.WriteAllText(roomInfoPath, json);
             Randomizer.Logger.LogInfo($"Room Info saved to {roomInfoPath}");
-        }
-
-        private static object LoadJson<T>(string filepath)
-        {
-            if (!File.Exists(filepath))
-            {
-                throw new Exception($"File {filepath} not found.");
-            }
-
-            Randomizer.Logger.LogInfo($"Will load data from {filepath}");
-            string json = File.ReadAllText(filepath);
-            T data = JsonConvert.DeserializeObject<T>(json);
-            Randomizer.Logger.LogInfo($"Data {data} loaded from {filepath}");
-            return data;
         }
 
         private class ItemIndexData
