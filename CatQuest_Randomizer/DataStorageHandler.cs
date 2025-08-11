@@ -14,18 +14,17 @@ namespace CatQuest_Randomizer
         public ModInfo modInfo;
         public Sprite apLogoSprite;
         public Sprite apTitleSprite;
-        private readonly string itemStoragePath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json";
 
         public DataStorageHandler()
         {
-            modInfo = (ModInfo)LoadJson<ModInfo>($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\ModInfo.json");
-            availableItems = LoadItems();
-            locations = LoadLocations();
+            modInfo = (ModInfo)HelperMethods.LoadJson<ModInfo>($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\ModInfo.json");
+            availableItems = LoadItems($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json");
+            locations = LoadLocations($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Locations.json");
             apLogoSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\ap-logo.png");
             apTitleSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\CatQuestArchiLogo.png");
         }
 
-        private List<Item> LoadItems()
+        private List<Item> LoadItems(string itemStoragePath)
         {
             Randomizer.Logger.LogInfo($"Will load item data from {itemStoragePath}");
 
@@ -36,10 +35,8 @@ namespace CatQuest_Randomizer
             return JsonConvert.DeserializeObject<List<Item>>(json);
         }
 
-        private IEnumerable<Location> LoadLocations()
+        private IEnumerable<Location> LoadLocations(string locationsPath)
         {
-            string locationsPath = $"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Locations.json";
-
             Randomizer.Logger.LogInfo($"Will load location data from {locationsPath}");
 
             if (!File.Exists(locationsPath))
@@ -62,19 +59,6 @@ namespace CatQuest_Randomizer
 
             // Create sprite
             return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        }
-        private static object LoadJson<T>(string filepath)
-        {
-            if (!File.Exists(filepath))
-            {
-                throw new Exception($"File {filepath} not found.");
-            }
-
-            Randomizer.Logger.LogInfo($"Will load data from {filepath}");
-            string json = File.ReadAllText(filepath);
-            T data = JsonConvert.DeserializeObject<T>(json);
-            Randomizer.Logger.LogInfo($"Data {data} loaded from {filepath}");
-            return data;
         }
 
         public class ModInfo
