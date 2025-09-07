@@ -46,7 +46,6 @@ namespace CatQuest_Randomizer.Patches
         {
             Randomizer.Logger.LogInfo("Will edit menu item for archipelago.");
 
-            // Access private field listItems
             FieldInfo listField = typeof(NewGamePanel).GetField("listItems", BindingFlags.NonPublic | BindingFlags.Instance);
             if (listField == null)
             {
@@ -62,12 +61,10 @@ namespace CatQuest_Randomizer.Patches
                 return;
             }
 
-            // Clone the last item
             menuItem = listItems[listItems.Count - 1];
 
             menuItem.SetName("New Archipelago Game");
 
-            // Access and modify private 'optionDescription' field
             FieldInfo descField = typeof(NewGamePanelOption).GetField("optionDescription", BindingFlags.NonPublic | BindingFlags.Instance);
             if (descField != null)
             {
