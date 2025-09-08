@@ -48,7 +48,8 @@ namespace CatQuest_Randomizer.Archipelago
                     errorMessage += $"\n    {error}";
                 }
 
-                throw new Exception(errorMessage);
+                Randomizer.Logger.LogInfo(errorMessage);
+                return false;
             }
 
             Connected = true;
