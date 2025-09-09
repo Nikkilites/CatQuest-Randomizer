@@ -9,16 +9,6 @@ using System.Linq;
 
 namespace CatQuest_Randomizer.Patches
 {
-    [HarmonyPatch(typeof(Title), nameof(Title.StartNormalGame))]
-    public class NewGamePatch
-    {
-        static void Prefix()
-        {
-            Randomizer.Logger.LogInfo("New game was started");
-            ItemIndex = 0;
-        }
-    }
-
     [HarmonyPatch(typeof(Title))]
     [HarmonyPatch("Menu_OnNormalContinueSelect", MethodType.Normal)]
     public class ContinueGamePatch
@@ -157,10 +147,12 @@ namespace CatQuest_Randomizer.Patches
                 string player = GetValue(InputTexts[1].text, "Name: ");
                 string password = GetValue(InputTexts[2].text, "Password: ");
 
+                ItemIndex = 0;
                 SaveRoomInfo(server, player, password);
 
                 if (!Randomizer.ConnectionHandler.Connect(server, player, password))
                 {
+                    Randomizer.Logger.LogInfo("New game was started");
                     Randomizer.Logger.LogInfo("Destroy Custom Popup.");
                     confirmationPanel.gameObject.GetComponent<ServerInputHandler>().CleanUp();
 
