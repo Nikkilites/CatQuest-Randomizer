@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine;
 
 namespace CatQuest_Randomizer.Patches
 {
@@ -27,30 +29,31 @@ namespace CatQuest_Randomizer.Patches
         }
     }
 
-    //[HarmonyPatch(typeof(ArcaneTemple), "Start")]
-    //public class DisableBuySkillPatch
-    //{
-    //    static bool Postfix()
-    //    {
-    //        this.triggers.TryGetValue(e.skillId, out arcaneAltarTrigger)
+    [HarmonyPatch(typeof(ArcaneTemple), "Start")]
+    public class DisableBuySkillPatch
+    {
+        static void Postfix(ArcaneTemple __instance)
+        {
+            Randomizer.Logger.LogInfo("Buying unlearned skills were disabled");
 
-    //        ArcaneAltarTrigger arcaneAltarTrigger = trigger as ArcaneAltarTrigger;
-    //        if (arcaneAltarTrigger != null)
-    //        {
-    //            Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
+            Dictionary<string, ArcaneAltarTrigger> triggers = AccessTools.Field(typeof(ArcaneTemple), "triggers").GetValue(__instance) as Dictionary<string, ArcaneAltarTrigger>;
 
-    //            if (!skill.isLearned)
-    //            {
-    //                canEnter = false;
-    //                Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");
-    //                arcaneAltarTrigger.gameObject.SetActive(false);
-    //                arcaneAltarTrigger.altar.orb.enabled = false;
-    //                arcaneAltarTrigger.altar.orb.color = new Color32(0, 0, 0, 125);
-    //            }
-    //        }
-    //        return true;
-    //    }
-    //}
+            string[] skillids = { "flamepurr", "healing_paw", "lightnyan", "cattrap", "purrserk", "astropaw", "freezepaw" };
+
+            foreach (string skillId in skillids)
+            {
+                Skill skill = Game.instance.skillManager.GetSkill(skillId);
+                if (triggers.TryGetValue(skillId, out ArcaneAltarTrigger arcaneAltarTrigger))
+                {
+                    if (!skill.isLearned)
+                    {
+                        arcaneAltarTrigger.gameObject.SetActive(false);
+                        arcaneAltarTrigger.altar.orb.enabled = false;
+                    }
+                }
+            }
+        }
+    }
 
     [HarmonyPatch(typeof(GiveBlock), nameof(GiveBlock.Start))]
     public class DisableObtainingSkillPatch
@@ -60,6 +63,7 @@ namespace CatQuest_Randomizer.Patches
         static bool Prefix(GiveBlock __instance)
         {
             string questId = questIdField.GetValue(__instance) as string;
+            Randomizer.Logger.LogInfo("Obtaining skill was disabled");
 
             Game.gameStream.Publish(new QuestEvent
             {
