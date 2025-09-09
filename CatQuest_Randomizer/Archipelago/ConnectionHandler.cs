@@ -28,7 +28,7 @@ namespace CatQuest_Randomizer.Archipelago
                 session.Items.ItemReceived += Randomizer.ItemHandler.OnItemReceived;
                 session.Socket.SocketClosed += OnDisconnect;
                 session.Socket.ErrorReceived += OnError;
-                result = session.TryConnectAndLogin(gameName, player, ItemsHandlingFlags.AllItems);
+                result = session.TryConnectAndLogin(gameName, player, ItemsHandlingFlags.AllItems, password: pass);
             }
             catch (Exception e)
             {
