@@ -25,6 +25,8 @@ namespace CatQuest_Randomizer.Patches
     {
         static void Prefix()
         {
+            RoomInfoData room = SaveDataHandler.RoomInfo;
+            Randomizer.ConnectionHandler.Connect(room.Server, room.Playername, room.Password);
             Randomizer.Logger.LogInfo("Game was continued");
         }
     }
