@@ -1,10 +1,11 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace CatQuest_Randomizer.Patches
 {
     [HarmonyPatch(typeof(WorldButton), nameof(WorldButton.ShowButton))]
-    public class DisableBuySkillPatch
+    public class DisableBuySkillButtonPatch
     {
         static bool Prefix(GameTrigger trigger, ref bool canEnter)
         {
@@ -17,41 +18,59 @@ namespace CatQuest_Randomizer.Patches
                 {
                     canEnter = false;
                     Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");
+                    //arcaneAltarTrigger.gameObject.SetActive(false);
+                    //arcaneAltarTrigger.altar.orb.enabled = false;
+                    //arcaneAltarTrigger.altar.orb.color = new Color32(0, 0, 0, 125);
                 }
             }
             return true;
         }
     }
 
+    //[HarmonyPatch(typeof(ArcaneTemple), "Start")]
+    //public class DisableBuySkillPatch
+    //{
+    //    static bool Postfix()
+    //    {
+    //        this.triggers.TryGetValue(e.skillId, out arcaneAltarTrigger)
+
+    //        ArcaneAltarTrigger arcaneAltarTrigger = trigger as ArcaneAltarTrigger;
+    //        if (arcaneAltarTrigger != null)
+    //        {
+    //            Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
+
+    //            if (!skill.isLearned)
+    //            {
+    //                canEnter = false;
+    //                Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");
+    //                arcaneAltarTrigger.gameObject.SetActive(false);
+    //                arcaneAltarTrigger.altar.orb.enabled = false;
+    //                arcaneAltarTrigger.altar.orb.color = new Color32(0, 0, 0, 125);
+    //            }
+    //        }
+    //        return true;
+    //    }
+    //}
 
     [HarmonyPatch(typeof(GiveBlock), nameof(GiveBlock.Start))]
     public class DisableObtainingSkillPatch
     {
-        private static bool obtained;
+        private static FieldInfo questIdField = typeof(GiveBlock).GetField("questId", BindingFlags.NonPublic | BindingFlags.Instance);
 
-        static void Prefix(GiveBlock __instance)
+        static bool Prefix(GiveBlock __instance)
         {
-            Skill skill = Game.instance.skillManager.GetSkill(__instance.id);
-            if (!Game.instance.gameData.player.skills.obtained.Contains(skill))
-            {
-                obtained = false;
-                Game.instance.gameData.player.skills.obtained.Add(skill);
-            }
-            else
-                obtained = true;
-        }
+            string questId = questIdField.GetValue(__instance) as string;
 
-        static void Postfix(GiveBlock __instance)
-        {
-            if (!obtained)
+            Game.gameStream.Publish(new QuestEvent
             {
-                Skill skill = Game.instance.skillManager.GetSkill(__instance.id);
-                Game.instance.gameData.player.skills.obtained.Remove(skill);
-                Randomizer.Logger.LogInfo($"Obtaining skill {__instance.id} was disabled");
-            }
+                type = QuestEvent.EventType.QUEST_BLOCK_COMPLETE,
+                questId = questId,
+                block = __instance
+            });
+
+            return false;
         }
     }
-
 
     [HarmonyPatch(typeof(SkillManager), nameof(SkillManager.LoadSkillData))]
     public class ListAllSkillsPatch
