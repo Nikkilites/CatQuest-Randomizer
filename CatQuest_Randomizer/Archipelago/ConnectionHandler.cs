@@ -4,7 +4,6 @@ using Archipelago.MultiClient.Net.Packets;
 using CatQuest_Randomizer.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CatQuest_Randomizer.Archipelago
 {
@@ -67,16 +66,17 @@ namespace CatQuest_Randomizer.Archipelago
         {
             if (Connected)
             {
-                session.Socket.Disconnect();
                 Connected = false;
                 session = null;
+                Randomizer.Logger.LogInfo($"Disconnected {reason}");
             }
         }
 
         public void OnError(Exception e, string message)
         {
             message += $"\n    Called from OnError";
-            throw new Exception(message);
+            Randomizer.Logger.LogInfo($"Disconnected {message}");
+            throw e;
         }
 
         public void SendLocation(Location location)
@@ -91,20 +91,6 @@ namespace CatQuest_Randomizer.Archipelago
             Randomizer.Logger.LogInfo($"Sending {location.Name} location to server");
 
             session.Locations.CompleteLocationChecksAsync(OnLocationSent, apId);
-        }
-
-        public void SendLocations(IEnumerable<Location> locations)
-        {
-            if (!Connected)
-            {
-                return;
-            }
-
-            long[] apIds = locations.Select(x => session.Locations.GetLocationIdFromName(gameName, x.Name)).ToArray();
-
-            Randomizer.Logger.LogInfo("Sending multiple locations to server.");
-
-            session.Locations.CompleteLocationChecksAsync(OnLocationSent, apIds);
         }
 
         void OnLocationSent(bool successful)
