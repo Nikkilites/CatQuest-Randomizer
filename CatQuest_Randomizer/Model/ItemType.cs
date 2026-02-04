@@ -6,6 +6,7 @@
 		exp,
 		skill,
         skillupgrade,
+        magiclevel,
         art,
 		key,
 	}

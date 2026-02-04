@@ -39,6 +39,6 @@ namespace CatQuest_Randomizer
         coins,
         skills,
         skillswithupgrades,
-        //skillswithlevels,
+        magiclevels,
     }
 }

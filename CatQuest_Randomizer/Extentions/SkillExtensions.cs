@@ -1,43 +1,76 @@
 ﻿using CatQuest_Randomizer.Model;
+using HarmonyLib;
+using System.Collections.Generic;
 
 namespace CatQuest_Randomizer.Extentions
 {
     public class SkillExtensions
     {
-        public void AddOrUpdateSkill(Item item)
+        public static void AddOrUpdateSkill(Item item)
         {
 			string gameSkillId = item.GetItemValue();
             ItemType gameSkillType = item.GetItemType();
 
-
-            Skill skill = Game.instance.skillManager.GetSkill(gameSkillId);
-
-			if (!skill.isLearned && gameSkillType == ItemType.skill)
+            if (gameSkillType != ItemType.magiclevel)
             {
-                AddSkill(gameSkillId, skill);
+                Skill skill = Game.instance.skillManager.GetSkill(gameSkillId);
+
+                if (!skill.isLearned && gameSkillType == ItemType.skill)
+                {
+                    AddSkill(gameSkillId, skill);
+                }
+                else if (skill.isLearned)
+                {
+                    UpgradeSkill(gameSkillId, skill);
+                }
+
+                if (gameSkillType == ItemType.skillupgrade)
+                {
+                    Randomizer.SlotDataHandler.AddReceivedSkillUpgrades(gameSkillId);
+                }
             }
-            else if (skill.isLearned)
+            else
             {
-                Randomizer.Logger.LogInfo($"Will level up Skill {gameSkillId}");
-                skill.level++;
-            }
-
-            if (gameSkillType == ItemType.skillupgrade)
-            {
-                Randomizer.SlotDataHandler.AddReceivedSkillUpgrades(gameSkillId);
+                UpgradeSkills();
             }
 
             CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
 		}
 
-        private void AddSkill(string gameSkillId, Skill skill)
+        private static void UpgradeSkills()
+        {
+            var skillIdsField = AccessTools.Field(typeof(SkillManager), "skillIds");
+
+            if (skillIdsField == null)
+            {
+                Randomizer.Logger.LogError("Could not find the 'skillIds' field in SkillManager.");
+                return;
+            }
+
+            List<string> skillIds = skillIdsField.GetValue(Game.instance.skillManager) as List<string>;
+
+
+            foreach (string skillId in skillIds)
+            {
+                Skill skill = Game.instance.skillManager.GetSkill(skillId);
+
+                if (skill.isLearned)
+                {
+                    UpgradeSkill(skillId, skill);
+                }
+
+                Randomizer.SlotDataHandler.AddReceivedSkillUpgrades(skillId);
+            }
+        }
+
+        private static void AddSkill(string gameSkillId, Skill skill)
         {
             Randomizer.Logger.LogInfo($"Will add Skill {gameSkillId} to player");
 
             Game.instance.skillManager.Obtain(gameSkillId);
             skill.level = 1;
 
-            if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.skillswithupgrades)
+            if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.skillswithupgrades || Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.magiclevels)
             {
                 skill.level += Randomizer.SlotDataHandler.GetReceivedSkillUpgrades(gameSkillId);
             }
@@ -53,6 +86,12 @@ namespace CatQuest_Randomizer.Extentions
                     }
                 }
             }
+        }
+
+        private static void UpgradeSkill(string gameSkillId, Skill skill)
+        {
+            Randomizer.Logger.LogInfo($"Will level up Skill {gameSkillId}");
+            skill.level++;
         }
     }
 }
