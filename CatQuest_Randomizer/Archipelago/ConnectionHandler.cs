@@ -12,6 +12,7 @@ namespace CatQuest_Randomizer.Archipelago
     {
         private ArchipelagoSession session;
         private const string gameName = "Cat Quest";
+        public Dictionary<string, object> SlotData { get; private set; }
         public bool Connected { get; private set; }
 
         public ConnectionHandler() { }
@@ -28,7 +29,7 @@ namespace CatQuest_Randomizer.Archipelago
                 session.Items.ItemReceived += Randomizer.ItemHandler.OnItemReceived;
                 session.Socket.SocketClosed += OnDisconnect;
                 session.Socket.ErrorReceived += OnError;
-                result = session.TryConnectAndLogin(gameName, player, ItemsHandlingFlags.AllItems, password: pass);
+                result = session.TryConnectAndLogin(gameName, player, ItemsHandlingFlags.AllItems, password: pass, requestSlotData: true);
             }
             catch (Exception e)
             {
@@ -54,6 +55,8 @@ namespace CatQuest_Randomizer.Archipelago
 
             Connected = true;
             LoginSuccessful loginSuccess = (LoginSuccessful)result;
+
+            SlotData = loginSuccess.SlotData;
 
             Randomizer.Logger.LogInfo($"Successfully connected to {server}.");
 

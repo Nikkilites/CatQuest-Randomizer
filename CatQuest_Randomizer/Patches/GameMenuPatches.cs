@@ -17,6 +17,7 @@ namespace CatQuest_Randomizer.Patches
         {
             RoomInfoData room = SaveDataHandler.RoomInfo;
             Randomizer.ConnectionHandler.Connect(room.Server, room.Playername, room.Password);
+            Randomizer.SlotDataHandler.FillSlotData(Randomizer.ConnectionHandler.SlotData);
             Randomizer.Logger.LogInfo("Game was continued");
         }
     }
