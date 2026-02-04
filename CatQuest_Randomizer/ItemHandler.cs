@@ -67,11 +67,12 @@ namespace CatQuest_Randomizer
         private void GiveItem(Item item)
         {
             UnlockableExtensions unlockableExtensions = new();
+            SkillExtensions skillExtensions = new();
 
             switch (item.GetItemType())
             {
                 case ItemType.skill:
-                    SkillExtensions skillExtensions = new();
+                case ItemType.skillupgrade:
                     skillExtensions.AddOrUpdateSkill(item);
                     break;
                 case ItemType.art:

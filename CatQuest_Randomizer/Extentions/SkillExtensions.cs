@@ -7,20 +7,27 @@ namespace CatQuest_Randomizer.Extentions
         public void AddOrUpdateSkill(Item item)
         {
 			string gameSkillId = item.GetItemValue();
+            ItemType gameSkillType = item.GetItemType();
 
-			Skill skill = Game.instance.skillManager.GetSkill(gameSkillId);
 
-			if (!skill.isLearned)
+            Skill skill = Game.instance.skillManager.GetSkill(gameSkillId);
+
+			if (!skill.isLearned && gameSkillType == ItemType.skill)
             {
                 AddSkill(gameSkillId, skill);
             }
-            else
+            else if (skill.isLearned)
             {
-				Randomizer.Logger.LogInfo($"Will level up Skill {gameSkillId}");
-				skill.level++;
-			}
+                Randomizer.Logger.LogInfo($"Will level up Skill {gameSkillId}");
+                skill.level++;
+            }
 
-			CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
+            if (gameSkillType == ItemType.skillupgrade)
+            {
+                Randomizer.SlotDataHandler.AddReceivedSkillUpgrades(gameSkillId);
+            }
+
+            CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
 		}
 
         private void AddSkill(string gameSkillId, Skill skill)
@@ -29,6 +36,12 @@ namespace CatQuest_Randomizer.Extentions
 
             Game.instance.skillManager.Obtain(gameSkillId);
             skill.level = 1;
+
+            if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.skillswithupgrades)
+            {
+                skill.level += Randomizer.SlotDataHandler.GetReceivedSkillUpgrades(gameSkillId);
+            }
+
             if (!Game.instance.gameData.player.skills.equipped.Contains(skill))
             {
                 for (int i = 0; i < 4; i++)

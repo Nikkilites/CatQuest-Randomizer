@@ -132,5 +132,16 @@ namespace CatQuest_Randomizer.Archipelago
         {
             return session.Locations.GetLocationNameFromId(id) ?? $"Location[{id}]";
         }
+
+        public int GetServerDataStorage(string key)
+        {
+            return session.DataStorage[key];
+        }
+
+        public void UpdateServerDataStorage(string key, int value)
+        {
+            Randomizer.Logger.LogInfo($"Update Server Data Storage {key} to {value}");
+            session.DataStorage[key] = value;
+        }
     }
 }
