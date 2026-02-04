@@ -1,10 +1,11 @@
-﻿using HarmonyLib;
+﻿using CatQuest.UI;
+using HarmonyLib;
 using System.Collections.Generic;
 
 namespace CatQuest_Randomizer.Patches
 {
     [HarmonyPatch(typeof(WorldButton), nameof(WorldButton.ShowButton))]
-    public class DisableBuySkillPatch
+    public class DisableBuySkillPopUpPatch
     {
         static bool Prefix(GameTrigger trigger, ref bool canEnter)
         {
@@ -16,7 +17,27 @@ namespace CatQuest_Randomizer.Patches
                 if (!skill.isLearned) //|| setting is on)
                 {
                     canEnter = false;
-                    Randomizer.Logger.LogInfo($"Entering purchase button for {arcaneAltarTrigger.skillId} was set to false");
+                    Randomizer.Logger.LogInfo($"Showing purchase pop up for {arcaneAltarTrigger.skillId} was disabled");
+                }
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(WorldMapHUD), "EnterTrigger")]
+    public class DisableBuySkillTriggerPatch
+    {
+        private static bool Prefix(WorldMapTriggerEvent e)
+        {
+            ArcaneAltarTrigger arcaneAltarTrigger = e.trigger as ArcaneAltarTrigger;
+            if (arcaneAltarTrigger != null)
+            {
+                Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
+
+                if (!skill.isLearned)
+                {
+                    Randomizer.Logger.LogInfo($"Entering purchase trigger for {arcaneAltarTrigger.skillId} was disabled");
+                    return false;
                 }
             }
             return true;
