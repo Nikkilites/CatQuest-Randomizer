@@ -108,9 +108,19 @@ namespace CatQuest_Randomizer.Archipelago
             session.Socket.SendPacket(statusUpdatePacket);
         }
 
+        public int GetThisSlotId()
+        {
+            return session.ConnectionInfo.Slot;
+        }
+
         public string GetPlayerNameFromSlot(int slot)
         {
             return session.Players.GetPlayerName(slot) ?? "Server";
+        }
+
+        public string GetPlayerAliasFromSlot(int slot)
+        {
+            return session.Players.GetPlayerAlias(slot) ?? "Server";
         }
 
         public string GetItemNameFromId(long id)
