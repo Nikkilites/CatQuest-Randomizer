@@ -9,13 +9,16 @@ namespace CatQuest_Randomizer.Patches
     {
         static void Postfix(WorldMapTriggerEvent e)
         {
-            ArcaneTempleTrigger arcaneTempleTrigger = e.trigger as ArcaneTempleTrigger;
-            if (arcaneTempleTrigger != null)
+            if (Randomizer.SlotDataHandler.includeTemples)
             {
-                if (arcaneTempleTrigger.skillId != "")
+                ArcaneTempleTrigger arcaneTempleTrigger = e.trigger as ArcaneTempleTrigger;
+                if (arcaneTempleTrigger != null)
                 {
-                    Randomizer.Logger.LogInfo($"Temple of type {arcaneTempleTrigger.skillId} was found, send check from TempleCheckPatch");
-                    Randomizer.LocationHandler.CheckLocation(arcaneTempleTrigger.skillId);
+                    if (arcaneTempleTrigger.skillId != "")
+                    {
+                        Randomizer.Logger.LogInfo($"Temple of type {arcaneTempleTrigger.skillId} was found, send check from TempleCheckPatch");
+                        Randomizer.LocationHandler.CheckLocation(arcaneTempleTrigger.skillId);
+                    }
                 }
             }
         }

@@ -9,11 +9,13 @@ namespace CatQuest_Randomizer
     {
         public Goal goal = 0;
         public SkillUpgrade skillUpgrade = 0;
+        public bool includeTemples = false;
 
         public void FillSlotData(Dictionary<string, object> slotData)
         {
             goal = (Goal)Convert.ToInt32(slotData["goal"]);
             skillUpgrade = (SkillUpgrade)Convert.ToInt32(slotData["skill_upgrade"]);
+            includeTemples = (bool)(slotData["include_temples"]);
         }
 
         public void AddReceivedSkillUpgrades(string gameSkillId)
