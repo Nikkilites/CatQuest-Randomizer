@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 
@@ -7,15 +6,22 @@ namespace CatQuest_Randomizer
 {
     public class SlotDataHandler
     {
-        public Goal goal = 0;
-        public SkillUpgrade skillUpgrade = 0;
-        public bool includeTemples = false;
+        public Goal goal;
+        public SkillUpgrade skillUpgrade;
+        public bool includeTemples;
 
         public void FillSlotData(Dictionary<string, object> slotData)
         {
-            goal = (Goal)Convert.ToInt32(slotData["goal"]);
-            skillUpgrade = (SkillUpgrade)Convert.ToInt32(slotData["skill_upgrade"]);
-            includeTemples = (bool)(slotData["include_temples"]);
+            if (slotData.TryGetValue("goal", out var goalObj))
+                goal = (Goal)Convert.ToInt32(goalObj);
+
+            if (slotData.TryGetValue("skill_upgrade", out var skillObj))
+                skillUpgrade = (SkillUpgrade)Convert.ToInt32(skillObj);
+
+            if (slotData.TryGetValue("include_temples", out var templeObj))
+                includeTemples = Convert.ToBoolean(templeObj);
+
+            Randomizer.Logger.LogInfo($"SlotData was found. goal: {goal} skillUpgrade: {skillUpgrade} includeTemples: {includeTemples}");
         }
 
         public void AddReceivedSkillUpgrades(string gameSkillId)
