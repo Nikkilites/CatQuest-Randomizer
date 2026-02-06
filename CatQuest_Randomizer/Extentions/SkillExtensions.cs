@@ -70,7 +70,7 @@ namespace CatQuest_Randomizer.Extentions
             Game.instance.skillManager.Obtain(gameSkillId);
             skill.level = 1;
 
-            if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.skillswithupgrades || Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.magiclevels)
+            if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.upgrades || Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.magic_levels)
             {
                 skill.level += Randomizer.SlotDataHandler.GetReceivedSkillUpgrades(gameSkillId);
             }

@@ -37,16 +37,16 @@ namespace CatQuest_Randomizer
 
     public enum Goal
     {
-        beatgame,
-        allquests,
+        main_quest,
+        all_quests,
         spellmeowstery,
     }
 
     public enum SkillUpgrade
     {
         coins,
-        skills,
-        skillswithupgrades,
-        magiclevels,
+        progressive_skills,
+        upgrades,
+        magic_levels,
     }
 }
