@@ -90,7 +90,7 @@ namespace CatQuest_Randomizer.Extentions
 
         private static void UpgradeSkill(string gameSkillId, Skill skill)
         {
-            Randomizer.Logger.LogInfo($"Will level up Skill {gameSkillId}");
+            Randomizer.Logger.LogInfo($"Will level up skill {gameSkillId}");
             skill.level++;
         }
     }
