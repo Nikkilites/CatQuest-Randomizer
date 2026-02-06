@@ -2,9 +2,9 @@
 {
     public class GoalHandler
     {
-        public void CheckIfGoal(string questId)
+        public void CheckIfGoal(string locationId)
         {
-            if (questId == "MainQuest_012")
+            if (locationId == "MainQuest_012")
                 OnGoalConditionMet();
         }
 

@@ -17,6 +17,7 @@ namespace CatQuest_Randomizer
         public static ItemHandler ItemHandler { get; private set; }
         public static LocationHandler LocationHandler { get; private set; }
         public static GoalHandler GoalHandler { get; private set; }
+        public static SlotDataHandler SlotDataHandler { get; private set; }
 
         private void Awake()
         {
@@ -27,6 +28,7 @@ namespace CatQuest_Randomizer
             ItemHandler = new();
             GoalHandler = new();
             DataStorageHandler = new();
+            SlotDataHandler = new();
 
             SetupFrameUpdater();
 

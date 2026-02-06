@@ -4,7 +4,7 @@ namespace CatQuest_Randomizer.Extentions
 {
 	public class UnlockableExtensions
 	{
-		public void AddRoyalArt(Item item)
+		public static void AddRoyalArt(Item item)
 		{
 			Randomizer.Logger.LogInfo($"Will add Royal Art {item.GetItemValue()} to player");
 
@@ -15,7 +15,7 @@ namespace CatQuest_Randomizer.Extentions
 			CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
 		}
 
-		public void AddKey(Item item)
+		public static void AddKey(Item item)
 		{
 			Randomizer.Logger.LogInfo($"Adding golden key to player");
 

@@ -20,6 +20,8 @@
                 "gold" => ItemType.gold,
                 "exp" => ItemType.exp,
                 "skill" => ItemType.skill,
+                "skillupgrade" => ItemType.skillupgrade,
+                "magiclevel" => ItemType.magiclevel,
                 "art" => ItemType.art,
                 _ => ItemType.key,
             };

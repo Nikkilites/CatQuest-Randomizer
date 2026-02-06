@@ -36,6 +36,66 @@
     "id": "skill.freezepaw"
   },
   {
+    "name": "Progressive Flamepurr",
+    "id": "skill.flamepurr"
+  },
+  {
+    "name": "Progressive Healing Paw",
+    "id": "skill.healing_paw"
+  },
+  {
+    "name": "Progressive Lightnyan",
+    "id": "skill.lightnyan"
+  },
+  {
+    "name": "Progressive Cattrap",
+    "id": "skill.cattrap"
+  },
+  {
+    "name": "Progressive Purrserk",
+    "id": "skill.purrserk"
+  },
+  {
+    "name": "Progressive Astropaw",
+    "id": "skill.astropaw"
+  },
+  {
+    "name": "Progressive Freezepaw",
+    "id": "skill.freezepaw"
+  },
+  {
+    "name": "Progressive Flamepurr Upgrade",
+    "id": "skillupgrade.flamepurr"
+  },
+  {
+    "name": "Progressive Healing Paw Upgrade",
+    "id": "skillupgrade.healing_paw"
+  },
+  {
+    "name": "Progressive Lightnyan Upgrade",
+    "id": "skillupgrade.lightnyan"
+  },
+  {
+    "name": "Progressive Cattrap Upgrade",
+    "id": "skillupgrade.cattrap"
+  },
+  {
+    "name": "Progressive Purrserk Upgrade",
+    "id": "skillupgrade.purrserk"
+  },
+  {
+    "name": "Progressive Astropaw Upgrade",
+    "id": "skillupgrade.astropaw"
+  },
+  {
+    "name": "Progressive Freezepaw Upgrade",
+    "id": "skillupgrade.freezepaw"
+  },
+  {
+    "name": "Progressive Magic Level",
+    "id": "magiclevel.magiclevel"
+  },
+  {
     "name": "Golden Key",
     "id": "key.golden"
   },

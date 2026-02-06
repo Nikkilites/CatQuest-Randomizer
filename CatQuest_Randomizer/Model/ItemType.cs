@@ -5,7 +5,9 @@
 		gold,
 		exp,
 		skill,
-		art,
+        skillupgrade,
+        magiclevel,
+        art,
 		key,
 	}
 }

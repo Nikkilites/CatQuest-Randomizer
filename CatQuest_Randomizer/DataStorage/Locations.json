@@ -314,5 +314,33 @@
   {
     "id": "resolution_A",
     "name": "IV. The Twin Resolution"
+  },
+  {
+    "id": "flamepurr",
+    "name": "Visited Arcane Temple of Flamepurr"
+  },
+  {
+    "id": "healing_paw",
+    "name": "Visited Arcane Temple of Healing Paw"
+  },
+  {
+    "id": "lightnyan",
+    "name": "Visited Arcane Temple of Lightnyan"
+  },
+  {
+    "id": "cattrap",
+    "name": "Visited Arcane Temple of Cattrap"
+  },
+  {
+    "id": "purrserk",
+    "name": "Visited Arcane Temple of Purrserk"
+  },
+  {
+    "id": "astropaw",
+    "name": "Visited Arcane Temple of Astropaw"
+  },
+  {
+    "id": "freezepaw",
+    "name": "Visited Arcane Temple of Freezepaw"
   }
 ]

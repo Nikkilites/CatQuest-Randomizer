@@ -14,7 +14,7 @@ namespace CatQuest_Randomizer.Patches
             {
                 Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
 
-                if (!skill.isLearned)
+                if (!skill.isLearned || Randomizer.SlotDataHandler.skillUpgrade != SkillUpgrade.coins)
                 {
                     canEnter = false;
                     Randomizer.Logger.LogInfo($"Showing purchase pop up for {arcaneAltarTrigger.skillId} was disabled");
@@ -34,7 +34,7 @@ namespace CatQuest_Randomizer.Patches
             {
                 Skill skill = Game.instance.skillManager.GetSkill(arcaneAltarTrigger.skillId);
 
-                if (!skill.isLearned)
+                if (!skill.isLearned || Randomizer.SlotDataHandler.skillUpgrade != SkillUpgrade.coins)
                 {
                     Randomizer.Logger.LogInfo($"Entering purchase trigger for {arcaneAltarTrigger.skillId} was disabled");
                     return false;
