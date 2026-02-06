@@ -72,7 +72,14 @@ namespace CatQuest_Randomizer.Extentions
 
             if (Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.upgrades || Randomizer.SlotDataHandler.skillUpgrade == SkillUpgrade.magic_levels)
             {
-                skill.level += Randomizer.SlotDataHandler.GetReceivedSkillUpgrades(gameSkillId);
+                int upgradesGotten = Randomizer.SlotDataHandler.GetReceivedSkillUpgrades(gameSkillId);
+
+                Randomizer.Logger.LogInfo($"Will add {upgradesGotten} already received upgrades for {gameSkillId} to player");
+
+                for (int i = 0; i < upgradesGotten; i++)
+                {
+                    UpgradeSkill(gameSkillId, skill);
+                }
             }
 
             if (!Game.instance.gameData.player.skills.equipped.Contains(skill))
