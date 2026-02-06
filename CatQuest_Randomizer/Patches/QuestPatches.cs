@@ -47,7 +47,7 @@ namespace CatQuest_Randomizer.Patches
     {
         static void Postfix(Quest __instance)
         {
-            RemoveQuestRewards(__instance);
+            //RemoveQuestRewards(__instance);
 
             var questPrerequisites = new Dictionary<string, string[]>
             {
