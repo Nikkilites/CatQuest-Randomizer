@@ -33,6 +33,18 @@ namespace CatQuest_Randomizer
         {
             return Convert.ToInt32(Randomizer.ConnectionHandler.GetServerDataStorage(gameSkillId + "_upgrades"));
         }
+
+        public void ResetSlotData()
+        {
+            Randomizer.Logger.LogInfo("Skill upgrade data was reset");
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("flamepurr_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("healing_paw_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("lightnyan_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("cattrap_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("purrserk_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("astropaw_upgrades", 0);
+            Randomizer.ConnectionHandler.UpdateServerDataStorage("freezepaw_upgrades", 0);
+        }
     }
 
     public enum Goal

@@ -153,7 +153,7 @@ namespace CatQuest_Randomizer.Patches
 
                 if (!Randomizer.ConnectionHandler.Connect(server, player, password))
                 {
-                    Randomizer.Logger.LogInfo("New game was started");
+                    Randomizer.Logger.LogInfo("Could not connect.");
                     Randomizer.Logger.LogInfo("Destroy Custom Popup.");
                     confirmationPanel.gameObject.GetComponent<ServerInputHandler>().CleanUp();
 
@@ -165,7 +165,12 @@ namespace CatQuest_Randomizer.Patches
                     oldNo?.Invoke();
                 }
                 else
+                {
+                    Randomizer.SlotDataHandler.ResetSlotData();
+                    Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+                    Randomizer.Logger.LogInfo("New game was started");
                     oldYes?.Invoke();
+                }
             };
         }
 
