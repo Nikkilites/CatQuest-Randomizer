@@ -10,7 +10,7 @@ namespace CatQuest_Randomizer
         public SkillUpgrade skillUpgrade;
         public bool includeTemples;
 
-        public void FillSlotData(Dictionary<string, object> slotData)
+        public void CollectSlotData(Dictionary<string, object> slotData)
         {
             if (slotData.TryGetValue("goal", out var goalObj))
                 goal = (Goal)Convert.ToInt32(goalObj);
