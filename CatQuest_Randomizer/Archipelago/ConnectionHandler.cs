@@ -68,22 +68,27 @@ namespace CatQuest_Randomizer.Archipelago
             {
                 Connected = false;
                 session = null;
+                HelperMethods.SaveCatQuestGame();
                 Randomizer.Logger.LogInfo($"Disconnected {reason}");
+                throw new Exception($"You have been disconnected from Archipelago. Please reload the game and login again. Your game has been saved. You can find more information in the mod log");
             }
         }
 
         public void OnError(Exception e, string message)
         {
             message += $"\n    Called from OnError";
+            HelperMethods.SaveCatQuestGame();
             Randomizer.Logger.LogInfo($"Disconnected {message}");
-            throw e;
+            throw new Exception($"An error has occured in your connection to Archipelago. Please reload the game and login again. Your game has been saved. You can find more information in the mod log");
         }
 
         public void SendLocation(Location location)
         {
             if (!Connected)
             {
-                return;
+                HelperMethods.SaveCatQuestGame();
+                Randomizer.Logger.LogInfo($"Location could not be sent. No longer connected to archipelago");
+                throw new Exception($"Location could not be sent. No longer connected to archipelago. Your game has been saved. You can find more information in the mod log");
             }
 
             long apId = session.Locations.GetLocationIdFromName(gameName, location.Name);
