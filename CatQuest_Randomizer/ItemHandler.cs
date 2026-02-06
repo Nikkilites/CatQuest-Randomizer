@@ -89,33 +89,7 @@ namespace CatQuest_Randomizer
 
             Randomizer.Logger.LogInfo($"Processed item with name: {item.Name}");
 
-            SaveArchipelago();
-        }
-
-        private void SaveArchipelago()
-        {
-            var saveManager = Game.instance.saveManager;
-            var currentSaveObject = AccessTools.Field(typeof(SaveManager), "currentSaveObject").GetValue(saveManager);
-            var updatePlayerProgressMethod = AccessTools.Method(typeof(SaveManager), "UpdatePlayerProgress");
-            var updateSkillProgressMethod = AccessTools.Method(typeof(SaveManager), "UpdateSkillProgress");
-            var updateEquipmentProgressMethod = AccessTools.Method(typeof(SaveManager), "UpdateEquipmentProgress");
-            var updateMetaProgressMethod = AccessTools.Method(typeof(SaveManager), "UpdateMetaProgress");
-            var flushMethod = AccessTools.Method(typeof(SaveManager), "Flush");
-
-            if (currentSaveObject != null
-                & updatePlayerProgressMethod != null
-                & updateSkillProgressMethod != null
-                & updateEquipmentProgressMethod != null 
-                & updateMetaProgressMethod != null 
-                & flushMethod != null)
-            {
-                updatePlayerProgressMethod.Invoke(saveManager, new[] { currentSaveObject });
-                updateSkillProgressMethod.Invoke(saveManager, new[] { currentSaveObject });
-                updateEquipmentProgressMethod.Invoke(saveManager, new[] { currentSaveObject });
-                updateMetaProgressMethod.Invoke(saveManager, new[] { currentSaveObject });
-                flushMethod.Invoke(saveManager, null);
-                Randomizer.Logger.LogInfo($"Saved the game");
-            }
+            HelperMethods.SaveCatQuestGame();
         }
     }
 }
