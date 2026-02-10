@@ -32,6 +32,11 @@ namespace CatQuest_Randomizer.Extentions
                 UpgradeSkills();
             }
 
+            if (Randomizer.SlotDataHandler.goal == Goal.spellmastery)
+            {
+                Randomizer.GoalHandler.CheckIfSkillWasGoal();
+            }
+
             CombatTextSystem.current.ShowText(CombatTextSystem.TextType.DAMAGE, $"{item.Name} obtained from {item.Player}", Game.instance.player.GetPosition(), 1f);
 		}
 

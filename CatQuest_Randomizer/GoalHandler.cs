@@ -307,9 +307,14 @@ namespace CatQuest_Randomizer
             }
         }
 
+        public void CheckIfSkillWasGoal()
         {
-            if (locationId == "MainQuest_012")
+            var obtainedSkills = _dataHelper.GetObtainedSkills();
+            if (obtainedSkills.Count == 7 && obtainedSkills.All(skill => skill.level >= 10))
+            {
+                Randomizer.Logger.LogInfo("Player achieved max level in all skills and goaled!");
                 OnGoalConditionMet();
+            }
         }
 
         private void OnGoalConditionMet()
