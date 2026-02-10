@@ -42,18 +42,7 @@ namespace CatQuest_Randomizer.Extentions
 
         private static void UpgradeSkills()
         {
-            var skillIdsField = AccessTools.Field(typeof(SkillManager), "skillIds");
-
-            if (skillIdsField == null)
-            {
-                Randomizer.Logger.LogError("Could not find the 'skillIds' field in SkillManager.");
-                return;
-            }
-
-            List<string> skillIds = skillIdsField.GetValue(Game.instance.skillManager) as List<string>;
-
-
-            foreach (string skillId in skillIds)
+            foreach (string skillId in CatQuestDataHelper.GetSkillIds())
             {
                 Skill skill = Game.instance.skillManager.GetSkill(skillId);
 
