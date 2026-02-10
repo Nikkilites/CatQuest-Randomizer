@@ -18,7 +18,11 @@ namespace CatQuest_Randomizer.Patches
         {
             RoomInfoData room = SaveDataHandler.RoomInfo;
             Randomizer.ConnectionHandler.Connect(room.Server, room.Playername, room.Password);
-            Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+            SlotDataHandler slotData = Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+
+            Randomizer.LocationHandler.Init();
+            Randomizer.GoalHandler.Init();
+
             Randomizer.Logger.LogInfo("Game was continued");
         }
     }
@@ -168,7 +172,11 @@ namespace CatQuest_Randomizer.Patches
                 else
                 {
                     Randomizer.SlotDataHandler.ResetSlotData();
-                    Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+
+                    SlotDataHandler slotData = Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+                    Randomizer.LocationHandler.Init();
+                    Randomizer.GoalHandler.Init();
+
                     Randomizer.Logger.LogInfo("New game was started");
                     oldYes?.Invoke();
                 }
