@@ -1,6 +1,5 @@
 ﻿using UniRx;
 using System.Linq;
-using System;
 
 namespace CatQuest_Randomizer
 {
