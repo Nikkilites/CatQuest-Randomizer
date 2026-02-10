@@ -40,14 +40,11 @@ namespace CatQuest_Randomizer.Patches
         }
     }
 
-
     [HarmonyPatch(typeof(Quest), nameof(Quest.Init))]
-    public class RemoveQuestRewardsAndPrereqsPatch
+    public class RemoveQuestPrereqsPatch
     {
         static void Postfix(Quest __instance)
         {
-            //RemoveQuestRewards(__instance);
-
             var questPrerequisites = new Dictionary<string, string[]>
             {
                 { "greatspirit_one", new[] { "waters_five" } },
@@ -71,14 +68,6 @@ namespace CatQuest_Randomizer.Patches
             {
                 RemovePrerequisites(__instance, prerequisites);
             }
-        }
-
-        static void RemoveQuestRewards(Quest __instance)
-        {
-            __instance.reward._gold = 0;
-            __instance.reward.exp = 0;
-
-            Randomizer.Logger.LogInfo($"Obtaining Quest Rewards for Quest {__instance.questId} was disabled");
         }
 
         static void RemovePrerequisites(Quest __instance, string[] prereqsToRemove)

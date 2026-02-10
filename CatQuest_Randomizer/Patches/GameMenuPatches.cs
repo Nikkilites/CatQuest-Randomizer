@@ -20,6 +20,11 @@ namespace CatQuest_Randomizer.Patches
             Randomizer.ConnectionHandler.Connect(room.Server, room.Playername, room.Password);
             SlotDataHandler slotData = Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
 
+            if (!slotData.includeQuestRewardExp || !slotData.includeQuestRewardCoins)
+            {
+                QuestExtensions.RemoveQuestRewards();
+            }
+
             Randomizer.LocationHandler.Init();
             Randomizer.GoalHandler.Init();
 
@@ -174,6 +179,12 @@ namespace CatQuest_Randomizer.Patches
                     Randomizer.SlotDataHandler.ResetSlotData();
 
                     SlotDataHandler slotData = Randomizer.SlotDataHandler.CollectSlotData(Randomizer.ConnectionHandler.SlotData);
+
+                    if (!slotData.includeQuestRewardExp || !slotData.includeQuestRewardCoins)
+                    {
+                        QuestExtensions.RemoveQuestRewards();
+                    }
+
                     Randomizer.LocationHandler.Init();
                     Randomizer.GoalHandler.Init();
 
