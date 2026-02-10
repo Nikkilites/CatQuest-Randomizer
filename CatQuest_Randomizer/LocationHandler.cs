@@ -17,7 +17,7 @@ namespace CatQuest_Randomizer
                 Randomizer.Logger.LogInfo($"Location was found on list of Locations");
 
                 Randomizer.ConnectionHandler.SendLocation(location);
-                Randomizer.GoalHandler.CheckIfGoal(locationId);
+                Randomizer.GoalHandler.CheckIfLocationIsGoal(locationId);
             }
             else
             {
