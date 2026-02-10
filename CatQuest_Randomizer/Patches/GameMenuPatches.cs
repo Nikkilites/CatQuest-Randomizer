@@ -6,6 +6,7 @@ using static CatQuest_Randomizer.SaveDataHandler;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
+using CatQuest_Randomizer.Extentions;
 
 namespace CatQuest_Randomizer.Patches
 {
