@@ -82,12 +82,7 @@ namespace CatQuest_Randomizer
                 {
                     Randomizer.Logger.LogInfo($"Skill {e.skill.data.name} reached level {e.skill.level}");
 
-                    var obtainedSkills = _dataHelper.GetObtainedSkills();
-                    if (obtainedSkills.Count == 7 && obtainedSkills.All(skill => skill.level >= 10))
-                    {
-                        Randomizer.Logger.LogInfo("Player achieved max level in all skills and goaled!");
-                        OnGoalConditionMet();
-                    }
+                    CheckIfSkillWasGoal();
                 });
             }
         }
