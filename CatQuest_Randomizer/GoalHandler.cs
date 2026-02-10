@@ -93,6 +93,194 @@ namespace CatQuest_Randomizer
             }
         }
 
+        private void DevLoggerObservers()
+        {
+
+            _dataHelper.GetCompletedQuests()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    string questName = e.Value;
+                    Randomizer.Logger.LogInfo($"Quest completed: {questName} (total: {_dataHelper.GetCompletedQuests().Count})");
+                });
+
+            _dataHelper.GetCompletedMainQuests()
+                .AsObservable()
+                .Subscribe(_ =>
+                {
+                    Randomizer.Logger.LogInfo($"Completed a Main Quest. (total: {_dataHelper.GetCompletedMainQuests()})");
+                });
+
+            _dataHelper.GetCompletedCaves()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var caveName = e.Value;
+
+                    var caves = _dataHelper.GetCompletedCaves();
+
+                    string Ccontents = string.Join(
+                        ", ",
+                        caves.Select(cave =>
+                            $"ID:{cave.id ?? "none"}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo($"Cave completed: {caveName} (total: {_dataHelper.GetCompletedCaves().Count}) -  [{Ccontents}]");
+
+                    var chests = _dataHelper.GetCollectedChests();
+
+                    string contents = string.Join(
+                        ", ",
+                        chests.Select(chest =>
+                            $"ID:{chest.id ?? "none"}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo($"Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
+                });
+
+            _dataHelper.GetClearedDungeons()
+                .AsObservable()
+                .Subscribe(_ =>
+                {
+                    Randomizer.Logger.LogInfo($"Completed a dungeon. (total:{_dataHelper.GetClearedDungeons()})");
+
+                    var chests = _dataHelper.GetCollectedChests();
+
+                    string contents = string.Join(
+                        ", ",
+                        chests.Select(chest =>
+                            $"ID:{chest.id ?? "none"}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo($"Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
+                });
+
+            _dataHelper.GetVisitedMonuments()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var monumentName = e.Value;
+
+                    var mons = _dataHelper.GetVisitedMonuments();
+
+                    string contents = string.Join(
+                        ", ",
+                        mons.Select(mon =>
+                            $"ID:{mon.id ?? "none"}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo($"Monument Visited {monumentName} (total: {_dataHelper.GetVisitedMonuments().Count} -  [{contents}])");
+                });
+
+            _dataHelper.GetCurrentInventory()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var thisinv = e.Value;
+
+                    var items = _dataHelper.GetCurrentInventory();
+
+                    string contents = string.Join(
+                        ", ",
+                        items.Select(item =>
+                            $"{item.category} | Type:{item.typeId} | ID:{item.id ?? "none"} | Amount:{item.amount.Value}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo(
+                        $"Inventory item added {thisinv} (total: {items.Count}) [{contents}]"
+                    );
+                });
+
+            _dataHelper.GetCurrentEquipment()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var thisequipment = e.Value;
+
+                    var equipment = _dataHelper.GetCurrentEquipment();
+
+                    string contents = string.Join(
+                        ", ",
+                        equipment.Select(kvp =>
+                        {
+                            var d = kvp.Value?.staticData;
+                            return d == null
+                                ? $"{kvp.Key}: <null>"
+                                : $"{kvp.Key}: {d.partName} (ID: {d.partId}, Type: {d.partType})";
+                        }).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo(
+                        $"Equipment equipped {thisequipment} (total: {equipment.Count}) [{contents}]"
+                    );
+                });
+
+            _dataHelper.GetCurrentLevel()
+                .AsObservable()
+                .Subscribe(_ =>
+                {
+                    Randomizer.Logger.LogInfo($"Player reached level {_dataHelper.GetCurrentLevel()}!");
+                });
+
+            _dataHelper.GetCurrentExp()
+                .AsObservable()
+                .Subscribe(_ =>
+                {
+                    Randomizer.Logger.LogInfo($"Player reached {_dataHelper.GetCurrentExp()} exp!");
+                });
+
+            _dataHelper.GetCurrentGold()
+                .AsObservable()
+                .Subscribe(_ =>
+                {
+                    Randomizer.Logger.LogInfo($"Player reached {_dataHelper.GetCurrentGold()} gold!");
+                });
+
+            _dataHelper.GetObtainedSkills()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var thisskill = e.Value;
+
+                    var skills = _dataHelper.GetObtainedSkills();
+
+                    string contents = string.Join(
+                    ", ",
+                        skills.Select(item =>
+                            $"{item.level} | Name:{item.data.name} | ID:{item.data.skillId ?? "none"} | gold cost :{item.data.goldCost} | goldCostPerLevel: {item.data.goldCostPerLevel} | effectType: {item.data.effectType} | targetType: {item.data.targetType}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo(
+                        $"skill obtained {thisskill} (total: {skills.Count}) [{contents}]"
+                    );
+                });
+
+            _dataHelper.GetEquippedSkills()
+                .ObserveAdd()
+                .Subscribe(e =>
+                {
+                    var thisskill = e.Value;
+
+                    var skills = _dataHelper.GetEquippedSkills();
+
+                    string contents = string.Join(
+                    ", ",
+                        skills.Select(item =>
+                            $"{item.level} | Name:{item.data.name} | ID:{item.data.skillId ?? "none"} | gold cost :{item.data.goldCost} | goldCostPerLevel: {item.data.goldCostPerLevel} | effectType: {item.data.effectType} | targetType: {item.data.targetType}"
+                        ).ToArray()
+                    );
+
+                    Randomizer.Logger.LogInfo(
+                        $"skill equipped {thisskill} (total: {skills.Count}) [{contents}]"
+                    );
+                });
+        }
 
         public void CheckIfLocationIsGoal(string locationId)
         {
