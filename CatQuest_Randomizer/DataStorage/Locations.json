@@ -1,346 +1,406 @@
 ﻿[
   {
-    "id": "MainQuest_001_PC",
-    "name": "A Whole New World"
+    "name": "A Whole New World",
+    "id": "MainQuest_001_PC"
   },
   {
-    "id": "MainQuest_002",
-    "name": "The Catpital (1)"
+    "name": "The Catpital (1)",
+    "id": "MainQuest_002"
   },
   {
-    "id": "MainQuest_003",
-    "name": "The Catpital (2)"
+    "name": "The Catpital (2)",
+    "id": "MainQuest_003"
   },
   {
-    "id": "MainQuest_004",
-    "name": "The Dragon and the Cat"
+    "name": "The Dragon and the Cat",
+    "id": "MainQuest_004"
   },
   {
-    "id": "MainQuest_005",
-    "name": "The Old Ruins"
+    "name": "The Old Ruins",
+    "id": "MainQuest_005"
   },
   {
-    "id": "MainQuest_006",
-    "name": "Of Sea and Rock (1)"
+    "name": "Of Sea and Rock (1)",
+    "id": "MainQuest_006"
   },
   {
-    "id": "MainQuest_007",
-    "name": "Of Sea and Rock (2)"
+    "name": "Of Sea and Rock (2)",
+    "id": "MainQuest_007"
   },
   {
-    "id": "MainQuest_008",
-    "name": "The Old Friend"
+    "name": "The Old Friend",
+    "id": "MainQuest_008"
   },
   {
-    "id": "MainQuest_009",
-    "name": "The Dragonblood"
+    "name": "The Dragonblood",
+    "id": "MainQuest_009"
   },
   {
-    "id": "MainQuest_010",
-    "name": "The Dragonsbane"
+    "name": "The Dragonsbane",
+    "id": "MainQuest_010"
   },
   {
-    "id": "MainQuest_011",
-    "name": "The Dragons Void"
+    "name": "The Dragons Void",
+    "id": "MainQuest_011"
   },
   {
-    "id": "MainQuest_012",
-    "name": "Epilogue"
+    "name": "Epilogue",
+    "id": "MainQuest_012"
   },
   {
-    "id": "sanctuary_one",
-    "name": "I. The Strange Charm"
+    "name": "I. The Strange Charm",
+    "id": "sanctuary_one"
   },
   {
-    "id": "sanctuary_two",
-    "name": "II. The Escape"
+    "name": "II. The Escape",
+    "id": "sanctuary_two"
   },
   {
-    "id": "sanctuary_three",
-    "name": "III. The Sacrifice"
+    "name": "III. The Sacrifice",
+    "id": "sanctuary_three"
   },
   {
-    "id": "sanctuary_four",
-    "name": "IV. The Sanctuary"
+    "name": "IV. The Sanctuary",
+    "id": "sanctuary_four"
   },
   {
-    "id": "greatspirit_one",
-    "name": "I. The Servant of God"
+    "name": "I. The Servant of God",
+    "id": "greatspirit_one"
   },
   {
-    "id": "greatspirit_two",
-    "name": "II. The Offerings"
+    "name": "II. The Offerings",
+    "id": "greatspirit_two"
   },
   {
-    "id": "greatspirit_three",
-    "name": "III. The Prayer"
+    "name": "III. The Prayer",
+    "id": "greatspirit_three"
   },
   {
-    "id": "greatspirit_four",
-    "name": "IV. The Godcat, Mauth"
+    "name": "IV. The Godcat, Mauth",
+    "id": "greatspirit_four"
   },
   {
-    "id": "kitmas_one",
-    "name": "The First Day of Kitmas"
+    "name": "The First Day of Kitmas",
+    "id": "kitmas_one"
   },
   {
-    "id": "kitmas_two",
-    "name": "The Second Day of Kitmas"
+    "name": "The Second Day of Kitmas",
+    "id": "kitmas_two"
   },
   {
-    "id": "kitmas_three",
-    "name": "The Third Day of Kitmas"
+    "name": "The Third Day of Kitmas",
+    "id": "kitmas_three"
   },
   {
-    "id": "kitmas_four",
-    "name": "The Fourth Day of Kitmas"
+    "name": "The Fourth Day of Kitmas",
+    "id": "kitmas_four"
   },
   {
-    "id": "kitmas_five",
-    "name": "Mewry Kitmas!"
+    "name": "Mewry Kitmas!",
+    "id": "kitmas_five"
   },
   {
-    "id": "missing_one",
-    "name": "I. The Missing Soldiers"
+    "name": "I. The Missing Soldiers",
+    "id": "missing_one"
   },
   {
-    "id": "missing_two",
-    "name": "II. The Rescue"
+    "name": "II. The Rescue",
+    "id": "missing_two"
   },
   {
-    "id": "faded_king_one",
-    "name": "I. The King's Mage"
+    "name": "I. The King's Mage",
+    "id": "faded_king_one"
   },
   {
-    "id": "faded_king_three",
-    "name": "II. The Mage Search"
+    "name": "II. The Mage Search",
+    "id": "faded_king_three"
   },
   {
-    "id": "faded_king_four",
-    "name": "III. The Spirits"
+    "name": "III. The Spirits",
+    "id": "faded_king_four"
   },
   {
-    "id": "faded_king_five",
-    "name": "IV. The Lion King"
+    "name": "IV. The Lion King",
+    "id": "faded_king_five"
   },
   {
-    "id": "east_one",
-    "name": "I. The East Suspicion"
+    "name": "I. The East Suspicion",
+    "id": "east_one"
   },
   {
-    "id": "east_two",
-    "name": "II. The East Shipment"
+    "name": "II. The East Shipment",
+    "id": "east_two"
   },
   {
-    "id": "east_three",
-    "name": "III. The East Escort"
+    "name": "III. The East Escort",
+    "id": "east_three"
   },
   {
-    "id": "east_four",
-    "name": "IV. The East Catfrontation"
+    "name": "IV. The East Catfrontation",
+    "id": "east_four"
   },
   {
-    "id": "meatmeatmeat",
-    "name": "I. Meat Meat Meat!"
+    "name": "I. Meat Meat Meat!",
+    "id": "meatmeatmeat"
   },
   {
-    "id": "red_riding_kitty",
-    "name": "II. Meatmeatmeatmeat!!"
+    "name": "II. Meatmeatmeatmeat!!",
+    "id": "red_riding_kitty"
   },
   {
-    "id": "distraction",
-    "name": "III. Meat Disposal Crew"
+    "name": "III. Meat Disposal Crew",
+    "id": "distraction"
   },
   {
-    "id": "crafty_merchant",
-    "name": "IV. The Meat Seller"
+    "name": "IV. The Meat Seller",
+    "id": "crafty_merchant"
   },
   {
-    "id": "the_whisperer_one",
-    "name": "I. The Growling Peasant"
+    "name": "I. The Growling Peasant",
+    "id": "the_whisperer_one"
   },
   {
-    "id": "the_whisperer_two",
-    "name": "II. The Catnip Ritual"
+    "name": "II. The Catnip Ritual",
+    "id": "the_whisperer_two"
   },
   {
-    "id": "the_whisperer_three",
-    "name": "III. The Circle"
+    "name": "III. The Circle",
+    "id": "the_whisperer_three"
   },
   {
-    "id": "the_whisperer_four",
-    "name": "IV. Fur-reedom!"
+    "name": "IV. Fur-reedom!",
+    "id": "the_whisperer_four"
   },
   {
-    "id": "the_whisperer_five",
-    "name": "V. The Whispurrer"
+    "name": "V. The Whispurrer",
+    "id": "the_whisperer_five"
   },
   {
-    "id": "waters_one",
-    "name": "I. Path to Water Walking"
+    "name": "I. Path to Water Walking",
+    "id": "waters_one"
   },
   {
-    "id": "waters_three",
-    "name": "II. The Fusion"
+    "name": "II. The Fusion",
+    "id": "waters_three"
   },
   {
-    "id": "waters_four",
-    "name": "III. Rogue Mages"
+    "name": "III. Rogue Mages",
+    "id": "waters_four"
   },
   {
-    "id": "waters_five",
-    "name": "IV. The Miracle"
+    "name": "IV. The Miracle",
+    "id": "waters_five"
   },
   {
-    "id": "west_one",
-    "name": "I. The West Investigation"
+    "name": "I. The West Investigation",
+    "id": "west_one"
   },
   {
-    "id": "west_two",
-    "name": "II. The West Heist"
+    "name": "II. The West Heist",
+    "id": "west_two"
   },
   {
-    "id": "west_three",
-    "name": "III. The Magic Lock"
+    "name": "III. The Magic Lock",
+    "id": "west_three"
   },
   {
-    "id": "west_four",
-    "name": "IV. The Revelation"
+    "name": "IV. The Revelation",
+    "id": "west_four"
   },
   {
-    "id": "magesold_one",
-    "name": "I. The Flying Bush"
+    "name": "I. The Flying Bush",
+    "id": "magesold_one"
   },
   {
-    "id": "magesold_two",
-    "name": "II. The Magic Tree"
+    "name": "II. The Magic Tree",
+    "id": "magesold_two"
   },
   {
-    "id": "magesold_three",
-    "name": "III. The Cult"
+    "name": "III. The Cult",
+    "id": "magesold_three"
   },
   {
-    "id": "magesold_four",
-    "name": "IV. Dragonflight"
+    "name": "IV. Dragonflight",
+    "id": "magesold_four"
   },
   {
-    "id": "darkpast_one",
-    "name": "I. The Missing Pages"
+    "name": "I. The Missing Pages",
+    "id": "darkpast_one"
   },
   {
-    "id": "darkpast_two",
-    "name": "II. The Protected Pages"
+    "name": "II. The Protected Pages",
+    "id": "darkpast_two"
   },
   {
-    "id": "darkpast_three",
-    "name": "III. The Runaway Archeologist"
+    "name": "III. The Runaway Archeologist",
+    "id": "darkpast_three"
   },
   {
-    "id": "darkpast_four",
-    "name": "IV. The Treasure"
+    "name": "IV. The Treasure",
+    "id": "darkpast_four"
   },
   {
-    "id": "blacksmith_assistance",
-    "name": "I. Blacksmith Assistance"
+    "name": "I. Blacksmith Assistance",
+    "id": "blacksmith_assistance"
   },
   {
-    "id": "blacksmith_apprentice",
-    "name": "II. Blacksmith Apprentice"
+    "name": "II. Blacksmith Apprentice",
+    "id": "blacksmith_apprentice"
   },
   {
-    "id": "blacksmith_journeyman",
-    "name": "III. Blacksmith Journeyman"
+    "name": "III. Blacksmith Journeyman",
+    "id": "blacksmith_journeyman"
   },
   {
-    "id": "blacksmith_master",
-    "name": "IV. Blacksmith Master"
+    "name": "IV. Blacksmith Master",
+    "id": "blacksmith_master"
   },
   {
-    "id":  "wyvern_attack",
-    "name": "The Dragon Worshippers"
+    "name": "The Dragon Worshippers",
+    "id": "wyvern_attack"
   },
   {
-    "id": "the_heirloom",
-    "name": "The Heirloom Armor"
+    "name": "The Heirloom Armor",
+    "id": "the_heirloom"
   },
   {
-    "id": "furbidden_mystery",
-    "name": "The Furbidden History"
+    "name": "The Furbidden History",
+    "id": "furbidden_mystery"
   },
   {
-    "id": "golden_key",
-    "name": "The Golden Key"
+    "name": "The Golden Key",
+    "id": "golden_key"
   },
   {
-    "id": "ultimate_dragonsbane",
-    "name": "The Ultimate Dragonsbane"
+    "name": "The Ultimate Dragonsbane",
+    "id": "ultimate_dragonsbane"
   },
   {
-    "id": "pawtato_one",
-    "name": "The Pawtato Mystery"
+    "name": "The Pawtato Mystery",
+    "id": "pawtato_one"
   },
   {
-    "id": "advertising_one",
-    "name": "Everyone's invited!"
+    "name": "Everyone's invited!",
+    "id": "advertising_one"
   },
   {
-    "id": "slashy_one",
-    "name": "The Forgotten Hero"
+    "name": "The Forgotten Hero",
+    "id": "slashy_one"
   },
   {
-    "id": "catnip_cure_A",
-    "name": "I. The Catnip Cure"
+    "name": "I. The Catnip Cure",
+    "id": "catnip_cure_A"
   },
   {
-    "id": "catnip_cure_B",
-    "name": "I. The Catnip Cure...again"
+    "name": "I. The Catnip Cure...again",
+    "id": "catnip_cure_B"
   },
   {
-    "id": "knightmare_A",
-    "name": "II. The Knightmare"
+    "name": "II. The Knightmare",
+    "id": "knightmare_A"
   },
   {
-    "id": "knightmare_B",
-    "name": "II. The Knightmare... again"
+    "name": "II. The Knightmare... again",
+    "id": "knightmare_B"
   },
   {
-    "id": "book_A",
-    "name": "III. The Book"
+    "name": "III. The Book",
+    "id": "book_A"
   },
   {
-    "id": "book_B",
-    "name": "III. The Book...again"
+    "name": "III. The Book...again",
+    "id": "book_B"
   },
   {
-    "id": "resolution_A",
-    "name": "IV. The Twin Resolution"
+    "name": "IV. The Twin Resolution",
+    "id": "resolution_A"
   },
   {
-    "id": "flamepurr",
-    "name": "Visited Arcane Temple of Flamepurr"
+    "name": "The Catpital Temple (Flamepurr)",
+    "id": "flamepurr"
   },
   {
-    "id": "healing_paw",
-    "name": "Visited Arcane Temple of Healing Paw"
+    "name": "Bermewda's Triangle Temple (Healing Paw)",
+    "id": "healing_paw"
   },
   {
-    "id": "lightnyan",
-    "name": "Visited Arcane Temple of Lightnyan"
+    "name": "East Pawt Temple (Lightnyan)",
+    "id": "lightnyan"
   },
   {
-    "id": "cattrap",
-    "name": "Visited Arcane Temple of Cattrap"
+    "name": "Windmew City Temple (Cattrap)",
+    "id": "cattrap"
   },
   {
-    "id": "purrserk",
-    "name": "Visited Arcane Temple of Purrserk"
+    "name": "South Pawt Temple (Purrserk)",
+    "id": "purrserk"
   },
   {
-    "id": "astropaw",
-    "name": "Visited Arcane Temple of Astropaw"
+    "name": "Death Isle Temple (Astropaw)",
+    "id": "astropaw"
   },
   {
-    "id": "freezepaw",
-    "name": "Visited Arcane Temple of Freezepaw"
+    "name": "Felingard Lake Temple (Freezepaw)",
+    "id": "freezepaw"
+  },
+  {
+    "name": "Monument by The Catpital",
+    "id": "MonumentTrigger_Catpital"
+  },
+  {
+    "name": "Monument in Puss Plains",
+    "id": "MonumentTrigger_PussPlains"
+  },
+  {
+    "name": "Monument below The Furbidden Fields",
+    "id": "MonumentTrigger_TwinPeaks"
+  },
+  {
+    "name": "Monument at South Point",
+    "id": "MonumentTrigger_SouthPoint"
+  },
+  {
+    "name": "Monument along East Pawt River",
+    "id": "MonumentTrigger_EastPawt"
+  },
+  {
+    "name": "Monument by Hilly Hills Coast",
+    "id": "MonumentTrigger_HillyHills_01"
+  },
+  {
+    "name": "Monument by The Unknown Head",
+    "id": "MonumentTrigger_HillyHills_02"
+  },
+  {
+    "name": "Monument above Mountain Pass",
+    "id": "MonumentTrigger_MountainPass"
+  },
+  {
+    "name": "Monument by Windmew Lake",
+    "id": "MonumentTrigger_Windmew"
+  },
+  {
+    "name": "Monument at North Point",
+    "id": "MonumentTrigger_NorthPoint"
+  },
+  {
+    "name": "Monument by Winters Edge",
+    "id": "MonumentTrigger_Purrning"
+  },
+  {
+    "name": "Monument on Old Master's Island",
+    "id": "MonumentTrigger_OldMaster"
+  },
+  {
+    "name": "Monument on Key Island",
+    "id": "MonumentTrigger_KeyIsland"
+  },
+  {
+    "name": "Monument on Monster Isle",
+    "id": "MonumentTrigger_MonsterIsle"
+  },
+  {
+    "name": "Monument on Death Isle",
+    "id": "MonumentTrigger_DeathIsle"
   }
 ]

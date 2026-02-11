@@ -9,8 +9,11 @@ namespace CatQuest_Randomizer
         public Goal goal;
         public SkillUpgrade skillUpgrade;
         public bool includeTemples;
+        public bool includeMonuments;
+        public bool includeQuestRewardExp;
+        public bool includeQuestRewardCoins;
 
-        public void CollectSlotData(Dictionary<string, object> slotData)
+        public SlotDataHandler CollectSlotData(Dictionary<string, object> slotData)
         {
             if (slotData.TryGetValue("goal", out var goalObj))
                 goal = (Goal)Convert.ToInt32(goalObj);
@@ -21,7 +24,24 @@ namespace CatQuest_Randomizer
             if (slotData.TryGetValue("include_temples", out var templeObj))
                 includeTemples = Convert.ToBoolean(templeObj);
 
-            Randomizer.Logger.LogInfo($"SlotData was found. goal: {goal} skillUpgrade: {skillUpgrade} includeTemples: {includeTemples}");
+            if (slotData.TryGetValue("include_monuments", out var monObj))
+                includeMonuments = Convert.ToBoolean(monObj);
+
+            if (slotData.TryGetValue("include_quest_reward_exp", out var expRewardObj))
+                includeQuestRewardExp = Convert.ToBoolean(expRewardObj);
+
+            if (slotData.TryGetValue("include_quest_reward_coins", out var coinRewardObj))
+                includeQuestRewardCoins = Convert.ToBoolean(coinRewardObj);
+
+            Randomizer.Logger.LogInfo($"SlotData was found. " +
+                $"goal: {goal}. " +
+                $"skillUpgrade: {skillUpgrade}. " +
+                $"includeTemples: {includeTemples}. " +
+                $"includeMonuments: {includeMonuments}. " +
+                $"includeQuestRewardExp: {includeQuestRewardExp}. " +
+                $"includeQuestRewardCoins: {includeQuestRewardCoins}");
+
+            return this;
         }
 
         public void AddReceivedSkillUpgrades(string gameSkillId)
@@ -50,8 +70,10 @@ namespace CatQuest_Randomizer
     public enum Goal
     {
         main_quest,
-        all_quests,
-        spellmeowstery,
+        questsanity,
+        max_level,
+        max_level_and_main_quest,
+        spellmastery,
     }
 
     public enum SkillUpgrade

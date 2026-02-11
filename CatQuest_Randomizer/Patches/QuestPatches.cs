@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,14 +40,11 @@ namespace CatQuest_Randomizer.Patches
         }
     }
 
-
     [HarmonyPatch(typeof(Quest), nameof(Quest.Init))]
-    public class RemoveQuestRewardsAndPrereqsPatch
+    public class RemoveQuestPrereqsPatch
     {
         static void Postfix(Quest __instance)
         {
-            //RemoveQuestRewards(__instance);
-
             var questPrerequisites = new Dictionary<string, string[]>
             {
                 { "greatspirit_one", new[] { "waters_five" } },
@@ -72,14 +68,6 @@ namespace CatQuest_Randomizer.Patches
             {
                 RemovePrerequisites(__instance, prerequisites);
             }
-        }
-
-        static void RemoveQuestRewards(Quest __instance)
-        {
-            __instance.reward._gold = 0;
-            __instance.reward.exp = 0;
-
-            Randomizer.Logger.LogInfo($"Obtaining Quest Rewards for Quest {__instance.questId} was disabled");
         }
 
         static void RemovePrerequisites(Quest __instance, string[] prereqsToRemove)
@@ -106,36 +94,21 @@ namespace CatQuest_Randomizer.Patches
         {
             Randomizer.Logger.LogInfo("Will list all Quests.");
 
-            var questsField = AccessTools.Field(typeof(QuestManager), "quests");
+            Dictionary<string, Quest> quests = CatQuestDataHelper.GetQuests(__instance);
 
-            if (questsField == null)
+            foreach (KeyValuePair<string, Quest> keyValuePair in quests)
             {
-                Randomizer.Logger.LogError("Could not find the 'quests' field in QuestManager.");
-                return;
-            }
+                var quest = keyValuePair.Value;
+                string questId = quest.questId;
+                LocalizedString title = quest.title;
 
-            Dictionary<string, Quest> quests = questsField.GetValue(__instance) as Dictionary<string, Quest>;
+                string prereqLevel = quest.prereq?.level.ToString() ?? "None";
 
-            if (quests != null)
-            {
-                foreach (KeyValuePair<string, Quest> keyValuePair in quests)
-                {
-                    var quest = keyValuePair.Value;
-                    string questId = quest.questId;
-                    LocalizedString title = quest.title;
+                string prereqQuests = quest.prereq?.quests != null
+                    ? string.Join(", ", quest.prereq.quests)
+                    : "None";
 
-                    string prereqLevel = quest.prereq?.level.ToString() ?? "None";
-
-                    string prereqQuests = quest.prereq?.quests != null
-                        ? string.Join(", ", quest.prereq.quests)
-                        : "None";
-
-                    Randomizer.Logger.LogInfo($"Loaded Quest: ID = {questId}, Title = {title}, Prereq Level = {prereqLevel}, Prereq Quests = {prereqQuests}");
-                }
-            }
-            else
-            {
-                Randomizer.Logger.LogError("No quests found to load.");
+                Randomizer.Logger.LogInfo($"Loaded Quest: ID = {questId}, Title = {title}, Prereq Level = {prereqLevel}, Prereq Quests = {prereqQuests}");
             }
         }
     }
