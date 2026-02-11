@@ -12,16 +12,25 @@ namespace CatQuest_Randomizer
         public List<Item> availableItems;
         public IEnumerable<Location> locations;
         public ModInfo modInfo;
-        public Sprite apLogoSprite;
-        public Sprite apTitleSprite;
+
+        public Dictionary<string, Sprite> Sprites = new Dictionary<string, Sprite>();
 
         public DataStorageHandler()
         {
             modInfo = (ModInfo)HelperMethods.LoadJson<ModInfo>($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\ModInfo.json");
             availableItems = LoadItems($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Items.json");
             locations = LoadLocations($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Locations.json");
-            apLogoSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\ap-logo.png");
-            apTitleSprite = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\CatQuestArchiLogo.png");
+
+            PreloadSprites();
+        }
+
+        private void PreloadSprites()
+        {
+            Sprites["apLogoSprite"] = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\ap-logo.png");
+            Sprites["apTitleSprite"] = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\CatQuestArchiLogo.png");
+            Sprites["questComplete"] = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\questComplete.png");
+            Sprites["questOutOfLogic"] = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\questOutOfLogic.png");
+            Sprites["questInLogic"] = LoadAsSprite($"{Environment.CurrentDirectory}\\ArchipelagoRandomizer\\DataStorage\\Sprites\\questInLogic.png");
         }
 
         private List<Item> LoadItems(string itemStoragePath)
