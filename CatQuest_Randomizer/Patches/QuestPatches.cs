@@ -30,7 +30,6 @@ namespace CatQuest_Randomizer.Patches
         }
     }
 
-
     [HarmonyPatch(typeof(Quest), nameof(Quest.Next))]
     public class QuestLogIndexPatch
     {

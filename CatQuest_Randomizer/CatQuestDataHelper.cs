@@ -114,6 +114,12 @@ namespace CatQuest_Randomizer
         {
             return playerData.currency.gold;
         }
+
+        public ReactiveProperty<Unlockables> GetCurrentUnlocks()
+        {
+            return playerData.meta.unlocks;
+        }
+
         public ReactiveCollection<InventoryItemData> GetCurrentInventory()
         {
             return playerData.inventory.items;

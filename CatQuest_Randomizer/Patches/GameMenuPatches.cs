@@ -84,7 +84,7 @@ namespace CatQuest_Randomizer.Patches
             if (copyrightField != null)
             {
                 var copyrightImg = copyrightField.GetValue(__instance) as TextMeshProUGUI;
-                if (copyrightImg != null && Randomizer.DataStorageHandler.apTitleSprite != null)
+                if (copyrightImg != null && Randomizer.DataStorageHandler.Sprites["apTitleSprite"] != null)
                 {
                     copyrightImg.text = copyrightImg.text + " " + Randomizer.DataStorageHandler.modInfo.ModVersion + ".";
                 }
@@ -101,9 +101,9 @@ namespace CatQuest_Randomizer.Patches
             if (imgField != null)
             {
                 var titleImg = imgField.GetValue(__instance) as Image;
-                if (titleImg != null && Randomizer.DataStorageHandler.apTitleSprite != null)
+                if (titleImg != null && Randomizer.DataStorageHandler.Sprites["apTitleSprite"] != null)
                 {
-                    titleImg.sprite = Randomizer.DataStorageHandler.apTitleSprite;
+                    titleImg.sprite = Randomizer.DataStorageHandler.Sprites["apTitleSprite"];
                 }
             }
         }
