@@ -17,7 +17,8 @@ namespace CatQuest_Randomizer
                 .Subscribe(_ => 
                 { 
                     Randomizer.Logger.LogInfo($"Setup Goal Subscriptions"); 
-                    SetupGoalSubscription(); 
+                    SetupGoalSubscription();
+                    DevLoggerObservers();
                 }); 
         }
 
@@ -89,20 +90,21 @@ namespace CatQuest_Randomizer
 
         private void DevLoggerObservers()
         {
+            Randomizer.Logger.LogInfo($"Setting up dev loggers");
 
             _dataHelper.GetCompletedQuests()
                 .ObserveAdd()
                 .Subscribe(e =>
                 {
                     string questName = e.Value;
-                    Randomizer.Logger.LogInfo($"Quest completed: {questName} (total: {_dataHelper.GetCompletedQuests().Count})");
+                    Randomizer.Logger.LogInfo($"QUESTLOGGER: Quest completed: {questName} (total: {_dataHelper.GetCompletedQuests().Count})");
                 });
 
             _dataHelper.GetCompletedMainQuests()
                 .AsObservable()
                 .Subscribe(_ =>
                 {
-                    Randomizer.Logger.LogInfo($"Completed a Main Quest. (total: {_dataHelper.GetCompletedMainQuests()})");
+                    Randomizer.Logger.LogInfo($"MAINQUESTLOGGER: Completed a Main Quest. (total: {_dataHelper.GetCompletedMainQuests()})");
                 });
 
             _dataHelper.GetCompletedCaves()
@@ -120,7 +122,7 @@ namespace CatQuest_Randomizer
                         ).ToArray()
                     );
 
-                    Randomizer.Logger.LogInfo($"Cave completed: {caveName} (total: {_dataHelper.GetCompletedCaves().Count}) -  [{Ccontents}]");
+                    Randomizer.Logger.LogInfo($"CAVELOGGER: Cave completed: {caveName} (total: {_dataHelper.GetCompletedCaves().Count}) -  [{Ccontents}]");
 
                     var chests = _dataHelper.GetCollectedChests();
 
@@ -131,14 +133,14 @@ namespace CatQuest_Randomizer
                         ).ToArray()
                     );
 
-                    Randomizer.Logger.LogInfo($"Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
+                    Randomizer.Logger.LogInfo($"CHESTLOGGER: Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
                 });
 
             _dataHelper.GetClearedDungeons()
                 .AsObservable()
                 .Subscribe(_ =>
                 {
-                    Randomizer.Logger.LogInfo($"Completed a dungeon. (total:{_dataHelper.GetClearedDungeons()})");
+                    Randomizer.Logger.LogInfo($"DUNGEONLOGGER2: Completed a dungeon. (total:{_dataHelper.GetClearedDungeons()})");
 
                     var chests = _dataHelper.GetCollectedChests();
 
@@ -149,7 +151,7 @@ namespace CatQuest_Randomizer
                         ).ToArray()
                     );
 
-                    Randomizer.Logger.LogInfo($"Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
+                    Randomizer.Logger.LogInfo($"CHESTLOGGER2: Will also print collected chests. (total:{_dataHelper.GetCollectedChests().Count}) -  [{contents}]");
                 });
 
             _dataHelper.GetVisitedMonuments()
@@ -167,7 +169,7 @@ namespace CatQuest_Randomizer
                         ).ToArray()
                     );
 
-                    Randomizer.Logger.LogInfo($"Monument Visited {monumentName} (total: {_dataHelper.GetVisitedMonuments().Count} -  [{contents}])");
+                    Randomizer.Logger.LogInfo($"MONUMENTLOGGER: Monument Visited {monumentName} (total: {_dataHelper.GetVisitedMonuments().Count} -  [{contents}])");
                 });
 
             _dataHelper.GetCurrentInventory()
@@ -186,7 +188,7 @@ namespace CatQuest_Randomizer
                     );
 
                     Randomizer.Logger.LogInfo(
-                        $"Inventory item added {thisinv} (total: {items.Count}) [{contents}]"
+                        $"INVENTORYLOGGER: Inventory item added {thisinv} (total: {items.Count}) [{contents}]"
                     );
                 });
 
@@ -210,7 +212,7 @@ namespace CatQuest_Randomizer
                     );
 
                     Randomizer.Logger.LogInfo(
-                        $"Equipment equipped {thisequipment} (total: {equipment.Count}) [{contents}]"
+                        $"EQUIPMENTLOGGER: Equipment equipped {thisequipment} (total: {equipment.Count}) [{contents}]"
                     );
                 });
 
@@ -218,21 +220,21 @@ namespace CatQuest_Randomizer
                 .AsObservable()
                 .Subscribe(_ =>
                 {
-                    Randomizer.Logger.LogInfo($"Player reached level {_dataHelper.GetCurrentLevel()}!");
+                    Randomizer.Logger.LogInfo($"LEVELLOGGER: Player reached level {_dataHelper.GetCurrentLevel()}!");
                 });
 
             _dataHelper.GetCurrentExp()
                 .AsObservable()
                 .Subscribe(_ =>
                 {
-                    Randomizer.Logger.LogInfo($"Player reached {_dataHelper.GetCurrentExp()} exp!");
+                    Randomizer.Logger.LogInfo($"EXPLOGGER: Player reached {_dataHelper.GetCurrentExp()} exp!");
                 });
 
             _dataHelper.GetCurrentGold()
                 .AsObservable()
                 .Subscribe(_ =>
                 {
-                    Randomizer.Logger.LogInfo($"Player reached {_dataHelper.GetCurrentGold()} gold!");
+                    Randomizer.Logger.LogInfo($"GOLDLOGGER: Player reached {_dataHelper.GetCurrentGold()} gold!");
                 });
 
             _dataHelper.GetObtainedSkills()
@@ -251,7 +253,7 @@ namespace CatQuest_Randomizer
                     );
 
                     Randomizer.Logger.LogInfo(
-                        $"skill obtained {thisskill} (total: {skills.Count}) [{contents}]"
+                        $"SKILLLOGGER: skill obtained {thisskill} (total: {skills.Count}) [{contents}]"
                     );
                 });
 
@@ -271,7 +273,7 @@ namespace CatQuest_Randomizer
                     );
 
                     Randomizer.Logger.LogInfo(
-                        $"skill equipped {thisskill} (total: {skills.Count}) [{contents}]"
+                        $"EQUIPPEDSKILLSLOGGER: skill equipped {thisskill} (total: {skills.Count}) [{contents}]"
                     );
                 });
         }
