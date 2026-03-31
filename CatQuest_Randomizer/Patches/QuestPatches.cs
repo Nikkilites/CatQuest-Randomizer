@@ -11,7 +11,7 @@ namespace CatQuest_Randomizer.Patches
         {
             if (__instance.isComplete)
             {
-                Randomizer.Logger.LogInfo($"Quest {__instance.questId} completed, send check from QuestCheckPatch");
+                Randomizer.Logger.LogInfo($"Quest {__instance.questId} was completed, send check from QuestCheckPatch");
                 Randomizer.LocationHandler.CheckLocation(__instance.questId);
             }
         }
